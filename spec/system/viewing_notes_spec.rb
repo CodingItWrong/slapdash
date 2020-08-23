@@ -45,4 +45,16 @@ RSpec.describe 'Viewing Notes', type: :system do
     expect(page).to have_content(user_note.title)
     expect(page).to have_content(user_note.body)
   end
+
+  it "allows viewing another user's notes" do
+    user = FactoryBot.create(:user)
+    other_user = FactoryBot.create(:user)
+    other_user_note = FactoryBot.create(:note, user: other_user)
+
+    visit "/#{other_user.display_name}"
+    click_on other_user_note.title
+
+    expect(page).to have_content(other_user_note.title)
+    expect(page).to have_content(other_user_note.body)
+  end
 end
