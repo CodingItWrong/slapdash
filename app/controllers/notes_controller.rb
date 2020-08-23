@@ -14,7 +14,11 @@ class NotesController < ApplicationController
 
   def create
     @note = @user.notes.create(note_params)
-    redirect_to note_path(@user.display_name, @note.slug), notice: 'Note created'
+    if @note.save
+      redirect_to note_path(@user.display_name, @note.slug), notice: 'Note created'
+    else
+      render :new
+    end
   end
 
   def show
@@ -24,8 +28,11 @@ class NotesController < ApplicationController
   end
 
   def update
-    @note.update(note_params)
-    redirect_to note_path(@user.display_name, @note.slug), notice: 'Note updated'
+    if @note.update(note_params)
+      redirect_to note_path(@user.display_name, @note.slug), notice: 'Note updated'
+    else
+      render :edit
+    end
   end
 
   def destroy

@@ -16,6 +16,11 @@ RSpec.describe 'Viewing Notes', type: :system do
 
     click_on 'Add'
 
+    # validation errors
+    click_on 'Save'
+    expect(page).to have_content("Title can't be blank")
+
+    # successful submission
     fill_in 'Title', with: note_title
     fill_in 'Body', with: note_body
     click_on 'Save'
@@ -52,6 +57,12 @@ RSpec.describe 'Viewing Notes', type: :system do
 
     click_on 'Edit'
 
+    # validation errors
+    fill_in 'Title', with: ''
+    click_on 'Save'
+    expect(page).to have_content("Title can't be blank")
+
+    # successful submission
     fill_in 'Title', with: new_title
     fill_in 'Body', with: new_body
     click_on 'Save'
