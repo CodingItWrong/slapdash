@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  root 'pages#home'
+
   get '/:user_display_name', to: 'notes#index', as: :notes
   get '/:user_display_name/notes/new', to: 'notes#new', as: :new_note
   post '/:user_display_name', to: 'notes#create'
