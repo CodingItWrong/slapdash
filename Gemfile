@@ -9,25 +9,18 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 
-group :development, :test do
-end
-
-group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.2'
-end
-
-
 group :development do
   gem 'bullet'
   gem 'dotenv-rails'
+  gem 'listen', '~> 3.2'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-byebug'
-  gem 'rspec-rails'
   gem 'coderay'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rspec-rails'
 end
 
 group :test do
