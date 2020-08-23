@@ -36,70 +36,74 @@ RSpec.describe 'Viewing Notes', type: :system do
     expect(page).to have_content(note_title)
   end
 
-  it 'allows editing a note' do
-    old_title = 'Note Title'
-    old_slug = 'note-title'
-    old_body = 'This is the note body.'
+  context 'editing' do
+    it 'allows editing a note' do
+      old_title = 'Note Title'
+      old_slug = 'note-title'
+      old_body = 'This is the note body.'
 
-    new_title = 'New Title'
-    new_slug = 'new-title'
-    new_body = 'This is the new body.'
+      new_title = 'New Title'
+      new_slug = 'new-title'
+      new_body = 'This is the new body.'
 
-    user = FactoryBot.create(:user)
-    note = FactoryBot.create(
-      :note,
-      user: user,
-      title: old_title,
-      body: old_body,
-    )
+      user = FactoryBot.create(:user)
+      note = FactoryBot.create(
+        :note,
+        user: user,
+        title: old_title,
+        body: old_body,
+      )
 
-    visit "/#{user.display_name}/#{old_slug}"
+      visit "/#{user.display_name}/#{old_slug}"
 
-    click_on 'Edit'
+      click_on 'Edit'
 
-    # validation errors
-    fill_in 'Title', with: ''
-    click_on 'Save'
-    expect(page).to have_current_path(
-      "/#{user.display_name}/#{old_slug}"
-    )
-    expect(page).to have_content("Title can't be blank")
+      # validation errors
+      fill_in 'Title', with: ''
+      click_on 'Save'
+      expect(page).to have_current_path(
+        "/#{user.display_name}/#{old_slug}"
+      )
+      expect(page).to have_content("Title can't be blank")
 
-    # successful submission
-    fill_in 'Title', with: new_title
-    fill_in 'Body', with: new_body
-    click_on 'Save'
+      # successful submission
+      fill_in 'Title', with: new_title
+      fill_in 'Body', with: new_body
+      click_on 'Save'
 
-    expect(page).to have_current_path(
-      "/#{user.display_name}/#{new_slug}"
-    )
+      expect(page).to have_current_path(
+        "/#{user.display_name}/#{new_slug}"
+      )
 
-    expect(page).not_to have_content(old_title)
-    expect(page).not_to have_content(old_body)
+      expect(page).not_to have_content(old_title)
+      expect(page).not_to have_content(old_body)
 
-    expect(page).to have_content(new_title)
-    expect(page).to have_content(new_body)
-    expect(page).to have_content('Note updated')
+      expect(page).to have_content(new_title)
+      expect(page).to have_content(new_body)
+      expect(page).to have_content('Note updated')
+    end
   end
 
-  it 'allows deleting a note' do
-    note_title = 'Note Title'
+  context 'deleting' do
+    it 'allows deleting a note' do
+      note_title = 'Note Title'
 
-    user = FactoryBot.create(:user)
-    note = FactoryBot.create(
-      :note,
-      user: user,
-      title: note_title,
-    )
+      user = FactoryBot.create(:user)
+      note = FactoryBot.create(
+        :note,
+        user: user,
+        title: note_title,
+      )
 
-    visit "/#{user.display_name}/#{note.slug}"
+      visit "/#{user.display_name}/#{note.slug}"
 
-    click_on 'Delete'
+      click_on 'Delete'
 
-    expect(page).to have_current_path(
-      "/#{user.display_name}"
-    )
-    expect(page).not_to have_content(note_title)
-    expect(page).to have_content('Note deleted')
+      expect(page).to have_current_path(
+        "/#{user.display_name}"
+      )
+      expect(page).not_to have_content(note_title)
+      expect(page).to have_content('Note deleted')
+    end
   end
 end
