@@ -5,6 +5,28 @@ RSpec.describe 'Viewing Notes', type: :system do
     driven_by(:rack_test)
   end
 
+  it 'allows adding a note' do
+    note_title = 'Note Title'
+    note_slug = 'note-title'
+    note_body = 'This is the note body.'
+
+    user = FactoryBot.create(:user)
+
+    visit "/#{user.display_name}"
+
+    click_on 'Add'
+
+    fill_in 'Title', with: note_title
+    fill_in 'Body', with: note_body
+    click_on 'Save'
+
+    expect(page).to have_current_path(
+      "/#{user.display_name}/#{note_slug}"
+    )
+    expect(page).to have_content(note_title)
+    expect(page).to have_content(note_body)
+  end
+
   it 'allows editing a note' do
     old_title = 'Note Title'
     old_slug = 'note-title'

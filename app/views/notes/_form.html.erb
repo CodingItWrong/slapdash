@@ -1,0 +1,11 @@
+<%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit 'Save' %>
+<% end %>
