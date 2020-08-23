@@ -10,6 +10,11 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: {confirm: 'Are you sure?'} %>
+      <%= link_to 'My Notes', notes_path(current_user.display_name) %>
+    <% end %>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
