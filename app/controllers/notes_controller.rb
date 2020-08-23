@@ -28,6 +28,11 @@ class NotesController < ApplicationController
     redirect_to note_path(@user.display_name, @note.slug) # TODO flash message
   end
 
+  def destroy
+    @note.destroy
+    redirect_to notes_path
+  end
+
   private
 
   def note_params

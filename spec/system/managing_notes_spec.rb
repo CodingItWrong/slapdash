@@ -58,4 +58,24 @@ RSpec.describe 'Viewing Notes', type: :system do
     expect(page).to have_content(new_title)
     expect(page).to have_content(new_body)
   end
+
+  it 'allows deleting a note' do
+    note_title = 'Note Title'
+
+    user = FactoryBot.create(:user)
+    note = FactoryBot.create(
+      :note,
+      user: user,
+      title: note_title,
+    )
+
+    visit "/#{user.display_name}/#{note.slug}"
+
+    click_on 'Delete'
+
+    expect(page).to have_current_path(
+      "/#{user.display_name}"
+    )
+    expect(page).not_to have_content(note_title)
+  end
 end
