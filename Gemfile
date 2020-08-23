@@ -17,3 +17,15 @@ group :development do
   gem 'listen', '~> 3.2'
 end
 
+
+group :development do
+  gem 'bullet'
+  gem 'dotenv-rails'
+end
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'rspec-rails'
+  gem 'coderay'
+end
