@@ -26,6 +26,9 @@ RSpec.describe 'Viewing Notes', type: :system do
     expect(page).to have_content(note_title)
     expect(page).to have_content(note_body)
     expect(page).to have_content('Note created')
+
+    visit "/#{user.display_name}"
+    expect(page).to have_content(note_title)
   end
 
   it 'allows editing a note' do
