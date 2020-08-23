@@ -16,4 +16,5 @@
     <%= f.text_area :body %>
   </div>
   <%= f.submit 'Save' %>
+  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name) %>
 <% end %>
