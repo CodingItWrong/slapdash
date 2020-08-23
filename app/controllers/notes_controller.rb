@@ -5,6 +5,7 @@ class NotesController < ApplicationController
   before_action :populate_note, except: [:index, :new, :create]
 
   def index
+    @notes = @user.notes
   end
 
   def new

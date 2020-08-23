@@ -19,8 +19,13 @@ RSpec.describe 'Viewing Notes', type: :system do
       body: note_body,
     )
 
-    visit "/#{user_name}/#{note_slug}"
+    visit "/#{user_name}"
 
+    click_on note_title
+
+    expect(page).to have_current_path(
+      "/#{user.display_name}/#{note_slug}"
+    )
     expect(page).to have_content(note_title)
     expect(page).to have_content(note_body)
   end

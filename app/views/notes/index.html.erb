@@ -1,1 +1,9 @@
 <%= link_to 'Add', new_note_path(@user.display_name) %>
+
+<ul>
+  <% @notes.each do |note| %>
+    <li>
+      <%= link_to note.title, note_path(@user.display_name, note.slug) %>
+    </li>
+  <% end %>
+</ul>
