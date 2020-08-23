@@ -14,7 +14,7 @@ class NotesController < ApplicationController
 
   def create
     @note = @user.notes.create(note_params)
-    redirect_to note_path(@user.display_name, @note.slug)
+    redirect_to note_path(@user.display_name, @note.slug), notice: 'Note created'
   end
 
   def show
@@ -25,12 +25,12 @@ class NotesController < ApplicationController
 
   def update
     @note.update(note_params)
-    redirect_to note_path(@user.display_name, @note.slug) # TODO flash message
+    redirect_to note_path(@user.display_name, @note.slug), notice: 'Note updated'
   end
 
   def destroy
     @note.destroy
-    redirect_to notes_path
+    redirect_to notes_path, notice: 'Note deleted'
   end
 
   private

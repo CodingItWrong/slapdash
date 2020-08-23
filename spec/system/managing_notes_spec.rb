@@ -25,6 +25,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     )
     expect(page).to have_content(note_title)
     expect(page).to have_content(note_body)
+    expect(page).to have_content('Note created')
   end
 
   it 'allows editing a note' do
@@ -57,6 +58,7 @@ RSpec.describe 'Viewing Notes', type: :system do
 
     expect(page).to have_content(new_title)
     expect(page).to have_content(new_body)
+    expect(page).to have_content('Note updated')
   end
 
   it 'allows deleting a note' do
@@ -77,5 +79,6 @@ RSpec.describe 'Viewing Notes', type: :system do
       "/#{user.display_name}"
     )
     expect(page).not_to have_content(note_title)
+    expect(page).to have_content('Note deleted')
   end
 end
