@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 2020_08_23_165200) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
-    t.index ["slug"], name: "index_notes_on_slug", unique: true
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
