@@ -60,12 +60,19 @@ RSpec.describe 'Viewing Notes', type: :system do
     # validation errors
     fill_in 'Title', with: ''
     click_on 'Save'
+    expect(page).to have_current_path(
+      "/#{user.display_name}/#{old_slug}"
+    )
     expect(page).to have_content("Title can't be blank")
 
     # successful submission
     fill_in 'Title', with: new_title
     fill_in 'Body', with: new_body
     click_on 'Save'
+
+    expect(page).to have_current_path(
+      "/#{user.display_name}/#{new_slug}"
+    )
 
     expect(page).not_to have_content(old_title)
     expect(page).not_to have_content(old_body)
