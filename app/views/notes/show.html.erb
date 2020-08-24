@@ -3,7 +3,9 @@
 <% if policy(@note).update? %>
   <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug) %>
 <% end %>
-<%= link_to 'Delete', note_path(@user.display_name, @note.slug), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% if policy(@note).destroy? %>
+  <%= link_to 'Delete', note_path(@user.display_name, @note.slug), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% end %>
 
 <div>
   <%= @note.body %>

@@ -39,6 +39,7 @@ class NotesController < ApplicationController
   end
 
   def destroy
+    authorize @note
     @note.destroy
     redirect_to notes_path, notice: 'Note deleted'
   end

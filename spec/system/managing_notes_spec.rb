@@ -119,6 +119,7 @@ RSpec.describe 'Managing Notes', type: :system do
         title: note_title,
       )
 
+      sign_in user
       visit "/#{user.display_name}/#{note.slug}"
 
       click_on 'Delete'
@@ -128,6 +129,25 @@ RSpec.describe 'Managing Notes', type: :system do
       )
       expect(page).not_to have_content(note_title)
       expect(page).to have_content('Note deleted')
+    end
+
+    it "does not allow deleting another user's note" do
+      note_title = 'Note Title'
+
+      user = FactoryBot.create(:user)
+      other_user = FactoryBot.create(:user)
+      other_user_note = FactoryBot.create(:note, user: other_user)
+
+      sign_in user
+      visit "/#{other_user.display_name}/#{other_user_note.slug}"
+
+      # do not include delete button
+      expect(page).not_to have_content('Delete')
+
+      # direct patch fails
+      expect {
+        delete "/#{other_user.display_name}/#{other_user_note.slug}"
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 end
