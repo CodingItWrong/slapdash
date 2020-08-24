@@ -29,6 +29,7 @@ class NotesController < ApplicationController
   end
 
   def update
+    authorize @note
     if @note.update(note_params)
       redirect_to note_path(@user.display_name, @note.slug), notice: 'Note updated'
     else

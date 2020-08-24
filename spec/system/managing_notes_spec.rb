@@ -100,6 +100,11 @@ RSpec.describe 'Managing Notes', type: :system do
       expect {
         visit "/#{other_user.display_name}/#{other_user_note.slug}/edit"
       }.to raise_error(Pundit::NotAuthorizedError)
+
+      # direct patch fails
+      expect {
+        patch "/#{other_user.display_name}/#{other_user_note.slug}"
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
