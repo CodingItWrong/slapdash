@@ -7,35 +7,37 @@ RSpec.describe 'Managing Notes', type: :system do
     driven_by(:rack_test)
   end
 
-  it 'allows adding a note' do
-    note_title = 'Note Title'
-    note_slug = 'note-title'
-    note_body = 'This is the note body.'
+  context 'adding' do
+    it 'allows adding a note' do
+      note_title = 'Note Title'
+      note_slug = 'note-title'
+      note_body = 'This is the note body.'
 
-    user = FactoryBot.create(:user)
+      user = FactoryBot.create(:user)
 
-    visit "/#{user.display_name}"
+      visit "/#{user.display_name}"
 
-    click_on 'Add'
+      click_on 'Add'
 
-    # validation errors
-    click_on 'Save'
-    expect(page).to have_content("Title can't be blank")
+      # validation errors
+      click_on 'Save'
+      expect(page).to have_content("Title can't be blank")
 
-    # successful submission
-    fill_in 'Title', with: note_title
-    fill_in 'Body', with: note_body
-    click_on 'Save'
+      # successful submission
+      fill_in 'Title', with: note_title
+      fill_in 'Body', with: note_body
+      click_on 'Save'
 
-    expect(page).to have_current_path(
-      "/#{user.display_name}/#{note_slug}"
-    )
-    expect(page).to have_content(note_title)
-    expect(page).to have_content(note_body)
-    expect(page).to have_content('Note created')
+      expect(page).to have_current_path(
+        "/#{user.display_name}/#{note_slug}"
+      )
+      expect(page).to have_content(note_title)
+      expect(page).to have_content(note_body)
+      expect(page).to have_content('Note created')
 
-    visit "/#{user.display_name}"
-    expect(page).to have_content(note_title)
+      visit "/#{user.display_name}"
+      expect(page).to have_content(note_title)
+    end
   end
 
   context 'editing' do
