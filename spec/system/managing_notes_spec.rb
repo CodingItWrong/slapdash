@@ -95,6 +95,11 @@ RSpec.describe 'Managing Notes', type: :system do
 
       # edit link hidden
       expect(page).not_to have_content('Edit')
+
+      # edit page request fails
+      expect {
+        visit "/#{other_user.display_name}/#{other_user_note.slug}/edit"
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
