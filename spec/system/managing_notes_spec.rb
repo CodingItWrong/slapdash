@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Viewing Notes', type: :system do
+RSpec.describe 'Managing Notes', type: :system do
+  include Devise::Test::IntegrationHelpers
+
   before do
     driven_by(:rack_test)
   end
@@ -54,6 +56,7 @@ RSpec.describe 'Viewing Notes', type: :system do
         body: old_body,
       )
 
+      sign_in user
       visit "/#{user.display_name}/#{old_slug}"
 
       click_on 'Edit'
@@ -81,6 +84,17 @@ RSpec.describe 'Viewing Notes', type: :system do
       expect(page).to have_content(new_title)
       expect(page).to have_content(new_body)
       expect(page).to have_content('Note updated')
+    end
+
+    it "does not allow editing another user's note" do
+      user = FactoryBot.create(:user)
+      other_user = FactoryBot.create(:user)
+      other_user_note = FactoryBot.create(:note, user: other_user)
+
+      visit "/#{other_user.display_name}/#{other_user_note.slug}"
+
+      # edit link hidden
+      expect(page).not_to have_content('Edit')
     end
   end
 
