@@ -6,14 +6,17 @@ class NotesController < ApplicationController
 
   def index
     @notes = @user.notes
+    @note = Note.new(user: @user)
   end
 
   def new
     @note = Note.new(user: @user)
+    authorize @note
   end
 
   def create
     @note = @user.notes.create(note_params)
+    authorize @note
     if @note.save
       redirect_to note_path(@user.display_name, @note.slug), notice: 'Note created'
     else

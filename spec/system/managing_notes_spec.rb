@@ -15,6 +15,7 @@ RSpec.describe 'Managing Notes', type: :system do
 
       user = FactoryBot.create(:user)
 
+      sign_in user
       visit "/#{user.display_name}"
 
       click_on 'Add'
@@ -37,6 +38,27 @@ RSpec.describe 'Managing Notes', type: :system do
 
       visit "/#{user.display_name}"
       expect(page).to have_content(note_title)
+    end
+
+    it 'does not allow adding a note for another user' do
+      user = FactoryBot.create(:user)
+      other_user = FactoryBot.create(:user)
+
+      visit "/#{other_user.display_name}"
+
+      # add link hidden
+      expect(page).not_to have_content('Add')
+
+      # create page request fails
+      expect {
+        visit "/#{other_user.display_name}/notes/new"
+      }.to raise_error(Pundit::NotAuthorizedError)
+
+      # direct post fails
+      body = { note: { title: '', body: '' } }
+      expect {
+        post "/#{other_user.display_name}", params: body, as: :json
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 

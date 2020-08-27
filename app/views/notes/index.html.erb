@@ -1,4 +1,6 @@
-<%= link_to 'Add', new_note_path(@user.display_name) %>
+<% if policy(@note).create? %>
+  <%= link_to 'Add', new_note_path(@user.display_name) %>
+<% end %>
 
 <ul>
   <% @notes.each do |note| %>

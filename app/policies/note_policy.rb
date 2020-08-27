@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class NotePolicy < ApplicationPolicy
+  def create?
+    own_record?
+  end
+
   def update?
     own_record?
   end
