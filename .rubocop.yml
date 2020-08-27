@@ -66,3 +66,6 @@ Style/Lambda:
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
