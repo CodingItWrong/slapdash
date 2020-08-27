@@ -9,12 +9,23 @@
 
   <div class="form-group">
     <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>
+    <%= f.text_field :title, class: "form-control #{'is-invalid' if @note.errors.include?(:title)}" %>
+    <% @note.errors.full_messages_for(:title).each do |message| %>
+      <div class="invalid-feedback">
+        <%= message %>
+      </div>
+    <% end %>
   </div>
   <div class="form-group">
     <%= f.label :body %>
-    <%= f.text_area :body, class: 'form-control' %>
+    <%= f.text_area :body, class: "form-control #{'is-invalid' if @note.errors.include?(:body)}" %>
+    <% @note.errors.full_messages_for(:body).each do |message| %>
+      <div class="invalid-feedback">
+        <%= message %>
+      </div>
+    <% end %>
   </div>
+
   <%= f.submit 'Save', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
 <% end %>
