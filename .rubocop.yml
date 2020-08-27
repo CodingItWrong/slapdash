@@ -2,7 +2,6 @@
 AllCops:
   TargetRubyVersion: 2.7
 
-  # Don't check binstubs or gemfile
   Exclude:
     - 'bin/**/*'
     - 'config/**/*'
@@ -27,42 +26,35 @@ Layout/SpaceInsideHashLiteralBraces:
 Style/BlockDelimiters:
   Enabled: false
 
-# Don't require a class comment
 Style/Documentation:
-  Enabled: false
+  Enabled: false # Don't require a class comment
 
 Style/GuardClause:
   Enabled: false
 
-# Require trailing commas for multiline arrays
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
-# Require trailing commas for multiline hashes
 Style/TrailingCommaInHashLiteral:
   Enabled: false
 
-# Require trailing commas for multiline argument lists
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
-# Allow but do not require modifier usage of if/unless
 Style/IfUnlessModifier:
-  Enabled: false
+  Enabled: false # Allow but do not require
 
-# Default Rails files have comment lines this long
 Layout/LineLength:
-  Enabled: false
+  Enabled: false # Default Rails files have comment lines this long
 
-# Allow *%i[…]
 Lint/RedundantSplatExpansion:
-  Enabled: false
+  Enabled: false # Allow *%i[…]
+
 Lint/AmbiguousOperator:
   Enabled: false
 
-# The examples I see always use stabby lambdas
 Style/Lambda:
-  Enabled: false
+  Enabled: false # The examples I see always use stabby lambdas
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
