@@ -5,7 +5,7 @@ class NotesController < ApplicationController
   before_action :populate_note, except: %i[index new create]
 
   def index
-    @notes = @user.notes
+    @notes = @user.notes.order('LOWER(title)')
     @note = Note.new(user: @user)
   end
 
