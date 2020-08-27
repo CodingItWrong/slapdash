@@ -10,14 +10,22 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <%= link_to 'Notes', root_path, class: 'navbar-brand' %>
-    </nav>
 
-    <% if user_signed_in? %>
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: {confirm: 'Are you sure?'} %>
-      <%= link_to 'My Notes', notes_path(current_user.display_name) %>
-    <% end %>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to 'My Notes', notes_path(current_user.display_name), class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: {confirm: 'Are you sure?'}, class: 'nav-link' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
 
     <% if notice.present? %>
       <div class="alert alert-success" role="alert">
