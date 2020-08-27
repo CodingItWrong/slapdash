@@ -12,42 +12,24 @@ AllCops:
     - 'Rakefile'
     - 'spec/*_helper.rb'
     - 'vendor/**/*'
-Layout/EmptyLineAfterMagicComment:
-  Enabled: false
-Layout/FirstArrayElementIndentation:
-  Enabled: false
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
-Style/BlockDelimiters:
-  Enabled: false
-Style/Documentation:
-  Enabled: false # Don't require a class comment
-Style/GuardClause:
-  Enabled: false
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: comma
-Style/TrailingCommaInHashLiteral:
-  Enabled: false
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: comma
-Style/IfUnlessModifier:
-  Enabled: false # Allow but do not require
-Layout/LineLength:
-  Enabled: false # Default Rails files have comment lines this long
-Lint/RedundantSplatExpansion:
-  Enabled: false # Allow *%i[…]
-Lint/AmbiguousOperator:
-  Enabled: false
-Style/Lambda:
-  Enabled: false # The examples I see always use stabby lambdas
+
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
-Style/EmptyMethod:
-  EnforcedStyle: expanded
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
+Layout/FirstArrayElementIndentation:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false # Default Rails files have comment lines this long
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Lint/AmbiguousOperator:
+  Enabled: false
 Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
 Lint/DeprecatedOpenSSLConstant:
@@ -68,6 +50,8 @@ Lint/OutOfRangeRegexpRef:
   Enabled: true
 Lint/RaiseException:
   Enabled: true
+Lint/RedundantSplatExpansion:
+  Enabled: false # Allow *%i[…]
 Lint/SelfAssignment:
   Enabled: true
 Lint/StructNewOverride:
@@ -76,20 +60,29 @@ Lint/TopLevelReturnWithArgument:
   Enabled: true
 Lint/UnreachableLoop:
   Enabled: true
+
 Style/AccessorGrouping:
   Enabled: true
 Style/ArrayCoercion:
   Enabled: true
 Style/BisectedAttrAccessor:
   Enabled: true
+Style/BlockDelimiters:
+  Enabled: false
 Style/CaseLikeIf:
   Enabled: true
+Style/Documentation:
+  Enabled: false # Don't require a class comment
+Style/EmptyMethod:
+  EnforcedStyle: expanded
 Style/ExplicitBlockArgument:
   Enabled: true
 Style/ExponentialNotation:
   Enabled: true
 Style/GlobalStdStream:
   Enabled: true
+Style/GuardClause:
+  Enabled: false
 Style/HashAsLastArrayItem:
   Enabled: true
 Style/HashEachMethods:
@@ -100,6 +93,10 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: true
+Style/IfUnlessModifier:
+  Enabled: false # Allow but do not require
+Style/Lambda:
+  Enabled: false # The examples I see always use stabby lambdas
 Style/OptionalBooleanParameter:
   Enabled: true
 Style/RedundantAssignment:
@@ -118,3 +115,9 @@ Style/SlicingWithRange:
   Enabled: true
 Style/StringConcatenation:
   Enabled: true
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
