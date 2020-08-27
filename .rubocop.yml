@@ -51,7 +51,7 @@ Style/IfUnlessModifier:
   Enabled: false
 
 # Default Rails files have comment lines this long
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 # Allow *%i[…]
