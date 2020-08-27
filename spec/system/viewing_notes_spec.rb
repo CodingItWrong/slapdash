@@ -62,4 +62,15 @@ RSpec.describe 'Viewing Notes', type: :system do
     expect(page).to have_content(other_user_note.title)
     expect(page).to have_content(other_user_note.body)
   end
+
+  it "allows viewing a user's notes when not signed in" do
+    other_user = FactoryBot.create(:user)
+    other_user_note = FactoryBot.create(:note, user: other_user)
+
+    visit "/#{other_user.display_name}"
+    click_on other_user_note.title
+
+    expect(page).to have_content(other_user_note.title)
+    expect(page).to have_content(other_user_note.body)
+  end
 end
