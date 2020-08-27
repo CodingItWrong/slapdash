@@ -44,6 +44,7 @@ RSpec.describe 'Managing Notes', type: :system do
       user = FactoryBot.create(:user)
       other_user = FactoryBot.create(:user)
 
+      sign_in user
       visit "/#{other_user.display_name}"
 
       # add link hidden
@@ -115,6 +116,7 @@ RSpec.describe 'Managing Notes', type: :system do
       other_user = FactoryBot.create(:user)
       other_user_note = FactoryBot.create(:note, user: other_user)
 
+      sign_in user
       visit "/#{other_user.display_name}/#{other_user_note.slug}"
 
       # edit link hidden
