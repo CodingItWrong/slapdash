@@ -1,8 +1,8 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 class NotesController < ApplicationController
   before_action :populate_user
-  before_action :populate_note, except: [:index, :new, :create]
+  before_action :populate_note, except: %i[index new create]
 
   def index
     @notes = @user.notes

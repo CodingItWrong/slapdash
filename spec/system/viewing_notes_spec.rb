@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Viewing Notes', type: :system do
@@ -14,7 +16,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     note_body = 'This is the note body.'
 
     user = FactoryBot.create(:user, display_name: user_name)
-    note = FactoryBot.create(
+    FactoryBot.create(
       :note,
       user: user,
       title: note_title,
@@ -24,7 +26,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     visit "/#{user_name}/#{note_slug}"
 
     expect(page).to have_current_path(
-      "/#{user.display_name}/#{note_slug}"
+      "/#{user.display_name}/#{note_slug}",
     )
     expect(page).to have_content(note_title)
     expect(page).to have_content(note_body)
@@ -42,7 +44,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     click_on user_note.title
 
     expect(page).to have_current_path(
-      "/#{user.display_name}/#{user_note.slug}"
+      "/#{user.display_name}/#{user_note.slug}",
     )
     expect(page).to have_content(user_note.title)
     expect(page).to have_content(user_note.body)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Managing Notes', type: :system do
@@ -30,7 +32,7 @@ RSpec.describe 'Managing Notes', type: :system do
       click_on 'Save'
 
       expect(page).to have_current_path(
-        "/#{user.display_name}/#{note_slug}"
+        "/#{user.display_name}/#{note_slug}",
       )
       expect(page).to have_content(note_title)
       expect(page).to have_content(note_body)
@@ -74,7 +76,7 @@ RSpec.describe 'Managing Notes', type: :system do
       new_body = 'This is the new body.'
 
       user = FactoryBot.create(:user)
-      note = FactoryBot.create(
+      FactoryBot.create(
         :note,
         user: user,
         title: old_title,
@@ -90,7 +92,7 @@ RSpec.describe 'Managing Notes', type: :system do
       fill_in 'Title', with: ''
       click_on 'Save'
       expect(page).to have_current_path(
-        "/#{user.display_name}/#{old_slug}"
+        "/#{user.display_name}/#{old_slug}",
       )
       expect(page).to have_content("Title can't be blank")
 
@@ -100,7 +102,7 @@ RSpec.describe 'Managing Notes', type: :system do
       click_on 'Save'
 
       expect(page).to have_current_path(
-        "/#{user.display_name}/#{new_slug}"
+        "/#{user.display_name}/#{new_slug}",
       )
 
       expect(page).not_to have_content(old_title)
@@ -151,15 +153,13 @@ RSpec.describe 'Managing Notes', type: :system do
       click_on 'Delete'
 
       expect(page).to have_current_path(
-        "/#{user.display_name}"
+        "/#{user.display_name}",
       )
       expect(page).not_to have_content(note_title)
       expect(page).to have_content('Note deleted')
     end
 
     it "does not allow deleting another user's note" do
-      note_title = 'Note Title'
-
       user = FactoryBot.create(:user)
       other_user = FactoryBot.create(:user)
       other_user_note = FactoryBot.create(:note, user: other_user)
