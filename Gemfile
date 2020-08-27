@@ -11,6 +11,7 @@ gem 'turbolinks', '~> 5'
 gem 'devise'
 gem 'friendly_id'
 gem 'pundit'
+gem 'bootstrap'
 
 group :development do
   gem 'bullet'
