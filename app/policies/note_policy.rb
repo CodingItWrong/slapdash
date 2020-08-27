@@ -5,7 +5,7 @@ class NotePolicy < ApplicationPolicy
     record.user == user
   end
 
-  alias :create? :own_record?
-  alias :update? :own_record?
-  alias :destroy? :own_record?
+  alias create? own_record?
+  alias update? own_record?
+  alias destroy? own_record?
 end
