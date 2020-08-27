@@ -15,6 +15,6 @@
     <%= f.label :body %>
     <%= f.text_area :body %>
   </div>
-  <%= f.submit 'Save' %>
-  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name) %>
+  <%= f.submit 'Save', class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
 <% end %>

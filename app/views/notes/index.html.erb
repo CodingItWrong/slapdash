@@ -1,11 +1,9 @@
 <% if policy(@note).create? %>
-  <%= link_to 'Add', new_note_path(@user.display_name) %>
+  <%= link_to 'Add', new_note_path(@user.display_name), class: 'btn btn-primary' %>
 <% end %>
 
-<ul>
+<div class="list-group">
   <% @notes.each do |note| %>
-    <li>
-      <%= link_to note.title, note_path(@user.display_name, note.slug) %>
-    </li>
+    <%= link_to note.title, note_path(@user.display_name, note.slug), class: 'list-group-item list-group-item-action' %>
   <% end %>
-</ul>
+</div>

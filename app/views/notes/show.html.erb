@@ -1,10 +1,10 @@
 <h2><%= @note.title %></h2>
 
 <% if policy(@note).update? %>
-  <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug) %>
+  <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug), class: 'btn btn-light' %>
 <% end %>
 <% if policy(@note).destroy? %>
-  <%= link_to 'Delete', note_path(@user.display_name, @note.slug), method: :delete, data: {confirm: 'Are you sure?'} %>
+  <%= link_to 'Delete', note_path(@user.display_name, @note.slug), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
 <% end %>
 
 <div>
