@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Viewing Notes', type: :system do
+  include Devise::Test::IntegrationHelpers
+
   before do
     driven_by(:rack_test)
   end
@@ -51,6 +53,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     other_user = FactoryBot.create(:user)
     other_user_note = FactoryBot.create(:note, user: other_user)
 
+    sign_in user
     visit "/#{other_user.display_name}"
     click_on other_user_note.title
 
