@@ -4,7 +4,7 @@
   </ol>
 </nav>
 
-<h2><%= @user.display_name %>'s Notes</h2>
+<h1><%= @user.display_name %>'s Notes</h1>
 
 <% if policy(@note).create? %>
   <%= link_to 'Add', new_note_path(@user.display_name), class: 'btn btn-primary' %>

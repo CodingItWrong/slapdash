@@ -7,7 +7,7 @@
   </ol>
 </nav>
 
-<h2><%= @note.title %></h2>
+<h1><%= @note.title %></h1>
 
 <% if policy(@note).update? %>
   <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug), class: 'btn btn-light' %>
