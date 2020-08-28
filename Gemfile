@@ -12,6 +12,7 @@ gem 'devise'
 gem 'friendly_id'
 gem 'pundit'
 gem 'bootstrap'
+gem 'kramdown'
 
 group :development do
   gem 'bullet'
