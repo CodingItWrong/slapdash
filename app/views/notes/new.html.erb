@@ -1,1 +1,10 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to @user.display_name, notes_path(@user.display_name) %>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Add Note</li>
+  </ol>
+</nav>
+
 <%= render 'form' %>

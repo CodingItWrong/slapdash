@@ -1,3 +1,9 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><%= @user.display_name %></li>
+  </ol>
+</nav>
+
 <h2><%= @user.display_name %>'s Notes</h2>
 
 <% if policy(@note).create? %>
