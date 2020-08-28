@@ -15,3 +15,7 @@ require("turbolinks").start()
 // const imagePath = (name) => images(name, true)
 
 import 'bootstrap'
+
+document.addEventListener("turbolinks:load", function() {
+  Prism.highlightAll()
+})
