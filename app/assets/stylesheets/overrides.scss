@@ -1,3 +1,9 @@
 .invalid-feedback {
   display: block;
 }
+
+.rendered-markdown {
+  code {
+    white-space: pre-wrap;
+  }
+}

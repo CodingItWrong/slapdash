@@ -16,4 +16,6 @@
   <%= link_to 'Delete', note_path(@user.display_name, @note.slug), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
 <% end %>
 
-<div><%= raw markdown_to_html(@note.body) %></div>
+<div class="rendered-markdown">
+  <%= raw markdown_to_html(@note.body) %>
+</div>
