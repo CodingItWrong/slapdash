@@ -1,12 +1,4 @@
 <%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post, local: true do |f| %>
-  <% if @note.errors.any? %>
-    <ul>
-      <% @note.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: "form-control #{'is-invalid' if @note.errors.include?(:title)}" %>
