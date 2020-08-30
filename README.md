@@ -1,4 +1,4 @@
-# Notes
+# Slapdash
 
 An application for creating public Markdown-based notes.
 
