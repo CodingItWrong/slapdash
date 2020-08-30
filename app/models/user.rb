@@ -8,5 +8,7 @@ class User < ApplicationRecord
 
   has_many :notes
 
-  validates :display_name, presence: true
+  validates :display_name,
+    presence: true,
+    uniqueness: true
 end
