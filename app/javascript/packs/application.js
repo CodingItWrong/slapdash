@@ -18,4 +18,19 @@ import 'bootstrap'
 
 document.addEventListener("turbolinks:load", function() {
   Prism.highlightAll()
+  addBootstrapClassesToRenderedMarkdown()
 })
+
+const BOOTSTRAP_TABLE_CLASSES = [
+  'table',
+  'table-sm',
+  'table-hover',
+  'table-responsive-md',
+]
+
+function addBootstrapClassesToRenderedMarkdown() {
+  const tables = document.querySelectorAll('.rendered-markdown table')
+  for (let table of tables) {
+    table.classList.add(...BOOTSTRAP_TABLE_CLASSES)
+  }
+}
