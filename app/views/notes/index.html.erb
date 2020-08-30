@@ -7,7 +7,9 @@
 <h1><%= @user.display_name %>'s Notes</h1>
 
 <% if policy(@note).create? %>
-  <%= link_to 'Add', new_note_path(@user.display_name), class: 'btn btn-primary' %>
+  <div class="mb-3">
+    <%= link_to 'Add', new_note_path(@user.display_name), class: 'btn btn-primary' %>
+  </div>
 <% end %>
 
 <div class="list-group">
