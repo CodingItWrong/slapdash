@@ -11,5 +11,6 @@ class User < ApplicationRecord
   validates :display_name,
     presence: true,
     uniqueness: true,
-    length: { maximum: 24 }
+    length: { maximum: 24 },
+    format: { with: /\A[a-zA-Z0-9]+\Z/ }
 end
