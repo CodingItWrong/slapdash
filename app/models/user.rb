@@ -10,5 +10,6 @@ class User < ApplicationRecord
 
   validates :display_name,
     presence: true,
-    uniqueness: true
+    uniqueness: true,
+    length: { maximum: 24 }
 end

@@ -22,5 +22,11 @@ RSpec.describe User, type: :model do
 
       expect(duplicate_user).not_to be_valid
     end
+
+    it 'must be 24 characters or less' do
+      too_long = 'A' * 25
+      user = FactoryBot.build(:user, display_name: too_long)
+      expect(user).not_to be_valid
+    end
   end
 end
