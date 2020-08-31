@@ -33,5 +33,17 @@ RSpec.describe Note, type: :model do
 
       expect(note.slug).to eq(old_slug)
     end
+
+    it 'cannot be duplicated by the same users' do
+      user = FactoryBot.create(:user)
+
+      title = 'My Note'
+      slug = 'my-note'
+      note1 = FactoryBot.create(:note, user: user, title: title)
+      note2 = FactoryBot.create(:note, user: user, title: title)
+
+      expect(note1.slug).to eq(slug)
+      expect(note2.slug).not_to eq(slug)
+    end
   end
 end
