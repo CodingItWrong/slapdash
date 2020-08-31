@@ -26,13 +26,20 @@ RSpec.describe User, type: :model do
     it 'cannot be longer than 24 characters' do
       too_long = 'A' * 25
       user = FactoryBot.build(:user, display_name: too_long)
+
       expect(user).not_to be_valid
+
+      messages = user.errors.full_messages_for(:display_name)
+      expect(messages).to eq(['Display name is too long (maximum is 24 characters)'])
     end
 
     it 'cannot be shorter than 3 characters' do
       too_short = 'A' * 2
       user = FactoryBot.build(:user, display_name: too_short)
       expect(user).not_to be_valid
+
+      messages = user.errors.full_messages_for(:display_name)
+      expect(messages).to eq(['Display name is too short (minimum is 3 characters)'])
     end
 
     context 'valid characters' do
