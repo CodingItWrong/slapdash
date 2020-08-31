@@ -16,7 +16,10 @@
   <body>
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-3">
       <div class="container">
-        <%= link_to 'slapdash.info', root_path, class: 'navbar-brand' %>
+        <%= link_to root_path, class: 'navbar-brand' do %>
+          <%= image_tag('logo-30@3x.png', class: 'navbar-logo mr-1') %>
+          slapdash.info
+        <% end %>
 
         <% if user_signed_in? %>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
