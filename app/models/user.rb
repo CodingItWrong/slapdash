@@ -9,8 +9,8 @@ class User < ApplicationRecord
   has_many :notes
 
   validates :display_name,
-    presence: true,
-    uniqueness: true,
-    length: { minimum: 3, maximum: 24 },
-    format: { with: /\A[a-zA-Z0-9]+\Z/ }
+            presence: true,
+            uniqueness: true,
+            length: { minimum: 3, maximum: 24 },
+            format: { with: /\A[a-zA-Z0-9]+\Z/ }
 end

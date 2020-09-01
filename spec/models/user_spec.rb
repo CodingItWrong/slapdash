@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'must be unique' do
-      user = FactoryBot.create(:user, display_name: valid_display_name)
+      FactoryBot.create(:user, display_name: valid_display_name)
       duplicate_user = FactoryBot.build(:user, display_name: valid_display_name)
 
       expect(duplicate_user).not_to be_valid
