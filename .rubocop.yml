@@ -12,6 +12,7 @@ AllCops:
     - 'Rakefile'
     - 'spec/*_helper.rb'
     - 'vendor/**/*'
+  NewCops: enable
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
