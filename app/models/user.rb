@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_many :notes
 
+  alias_attribute :to_param, :display_name
+
   validates :display_name,
             presence: true,
             uniqueness: true,
