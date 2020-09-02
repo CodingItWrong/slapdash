@@ -6,11 +6,11 @@ class NotesController < ApplicationController
 
   def index
     @notes = @user.notes.order('LOWER(title)')
-    @note = Note.new(user: @user)
+    @note = @user.notes.build
   end
 
   def new
-    @note = Note.new(user: @user)
+    @note = @user.notes.build
     authorize @note
   end
 
