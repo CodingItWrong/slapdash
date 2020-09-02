@@ -11,5 +11,7 @@ class Note < ApplicationRecord
     title_changed?
   end
 
+  alias_attribute :to_param, :slug
+
   validates :title, presence: true
 end

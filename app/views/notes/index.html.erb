@@ -18,6 +18,6 @@
 
 <div class="list-group mb-3">
   <% @notes.each do |note| %>
-    <%= link_to note.title, note_path(@user.display_name, note.slug), class: 'list-group-item list-group-item-action' %>
+    <%= link_to note.title, note_path(@user, note), class: 'list-group-item list-group-item-action' %>
   <% end %>
 </div>
