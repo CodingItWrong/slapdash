@@ -3,6 +3,11 @@ code {
   color: inherit;
 }
 
+blockquote {
+  border-left: solid 2px $gray-500;
+  padding-left: 10px;
+}
+
 .invalid-feedback {
   display: block;
 }
