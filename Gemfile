@@ -15,7 +15,6 @@ gem 'bootstrap'
 gem 'kramdown'
 
 group :development do
-  gem 'bullet'
   gem 'dotenv-rails'
   gem 'listen', '~> 3.3'
   gem 'web-console', '>= 3.3.0'
