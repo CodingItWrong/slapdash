@@ -2,7 +2,7 @@
   "name": "notes_rails",
   "private": true,
   "dependencies": {
-    "@rails/ujs": "^6.1.0",
+    "@rails/ujs": "^6.1.1",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
