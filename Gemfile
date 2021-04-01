@@ -17,7 +17,7 @@ gem 'nokogiri', '>= 1.11.0.rc4'
 
 group :development do
   gem 'dotenv-rails'
-  gem 'listen', '~> 3.4'
+  gem 'listen', '~> 3.5'
   gem 'web-console', '>= 3.3.0'
 end
 
