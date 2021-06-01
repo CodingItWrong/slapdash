@@ -276,7 +276,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap
+  bootstrap (~> 4.6.0, < 5)
   capybara
   coderay
   devise

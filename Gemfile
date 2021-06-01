@@ -11,7 +11,7 @@ gem 'turbolinks', '~> 5'
 gem 'devise'
 gem 'friendly_id'
 gem 'pundit'
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.6.0', '< 5'
 gem 'kramdown'
 gem 'nokogiri', '>= 1.11.0.rc4'
 
