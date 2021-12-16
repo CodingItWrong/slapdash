@@ -24,7 +24,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+            - v2-dependencies-{{ checksum "Gemfile.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v2-dependencies-
 
@@ -34,13 +34,12 @@ jobs:
             gem update bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
-            yarn install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
             - vendor/bundle
-          key: v2-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
       - run: bundle exec rails db:create
