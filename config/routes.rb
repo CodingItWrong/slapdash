@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  # redirect slapdash.info to slapdash.codingitwrong.com
+  get '/(*path)',
+    to: redirect { |path_params, request|
+      "https://slapdash.codingitwrong.com/#{path_params[:path]}"
+    },
+    status: 302,
+    constraints: { domain: 'slapdash.info' }
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
   }
