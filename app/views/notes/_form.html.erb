@@ -1,6 +1,8 @@
-<%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post, local: true do |f| %>
-  <%= f.submit 'Save', class: 'btn btn-primary' %>
-  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
+<%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post, local: true, class: 'full-height' do |f| %>
+  <div>
+    <%= f.submit 'Save', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
+  </div>
 
   <div class="form-group">
     <%= f.label :title %>
@@ -11,18 +13,18 @@
       </div>
     <% end %>
   </div>
-  <div class="form-group">
+  <div class="form-group form-group__body">
     <%= f.label :body %>
-    <%= f.text_area :body, rows: 7, class: "form-control markdown-editor #{'is-invalid' if @note.errors.include?(:body)}" %>
-    <% @note.errors.full_messages_for(:body).each do |message| %>
-      <div class="invalid-feedback">
-        <%= message %>
-      </div>
-    <% end %>
     <small class="form-text text-muted">
       Accepts
       <a href="https://kramdown.gettalong.org/quickref.html" class="text-muted" target="_blank" rel="noopener noreferrer">kramdown-flavored</a>
       markdown
     </small>
+    <% @note.errors.full_messages_for(:body).each do |message| %>
+      <div class="invalid-feedback">
+        <%= message %>
+      </div>
+    <% end %>
+    <%= f.text_area :body, rows: 7, class: "form-control markdown-editor #{'is-invalid' if @note.errors.include?(:body)}" %>
   </div>
 <% end %>
