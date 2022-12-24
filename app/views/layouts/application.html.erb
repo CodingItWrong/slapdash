@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield :title %> | slapdash.info</title>
+    <title><%= yield :title %> | Slapdash</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -17,7 +17,7 @@
       <div class="container">
         <%= link_to root_path, class: 'navbar-brand' do %>
           <%= image_tag('logo-30@3x.png', class: 'navbar-logo mr-1') %>
-          slapdash.info
+          Slapdash
         <% end %>
 
         <% if user_signed_in? %>
