@@ -1,4 +1,7 @@
 <%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post, local: true do |f| %>
+  <%= f.submit 'Save', class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
+
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: "form-control #{'is-invalid' if @note.errors.include?(:title)}" %>
@@ -22,7 +25,4 @@
       markdown
     </small>
   </div>
-
-  <%= f.submit 'Save', class: 'btn btn-primary' %>
-  <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
 <% end %>
