@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'kramdown'
+require "kramdown"
 
 module MarkdownHelper
   def markdown_to_html(markdown)

@@ -5,7 +5,7 @@ class NotesController < ApplicationController
   before_action :populate_note, except: %i[index new create]
 
   def index
-    @notes = @user.notes.order('LOWER(title)')
+    @notes = @user.notes.order("LOWER(title)")
     @note = @user.notes.build
   end
 
@@ -18,7 +18,7 @@ class NotesController < ApplicationController
     @note = @user.notes.create(note_params)
     authorize @note
     if @note.save
-      redirect_to note_path(@user.display_name, @note.slug), notice: 'Note created'
+      redirect_to note_path(@user.display_name, @note.slug), notice: "Note created"
     else
       render :new
     end
@@ -34,7 +34,7 @@ class NotesController < ApplicationController
   def update
     authorize @note
     if @note.update(note_params)
-      redirect_to note_path(@user.display_name, @note.slug), notice: 'Note updated'
+      redirect_to note_path(@user.display_name, @note.slug), notice: "Note updated"
     else
       @note.restore_attributes([:slug])
       render :edit
@@ -44,7 +44,7 @@ class NotesController < ApplicationController
   def destroy
     authorize @note
     @note.destroy
-    redirect_to notes_path, notice: 'Note deleted'
+    redirect_to notes_path, notice: "Note deleted"
   end
 
   private

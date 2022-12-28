@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Viewing Notes', type: :system do
+RSpec.describe "Viewing Notes", type: :system do
   before do
     driven_by(:rack_test)
   end
 
-  it 'allows navigating directly to a note' do
-    user_name = 'someuser'
-    note_title = 'Note Title'
-    note_slug = 'note-title'
-    note_body = 'This is the note body.'
+  it "allows navigating directly to a note" do
+    user_name = "someuser"
+    note_title = "Note Title"
+    note_slug = "note-title"
+    note_body = "This is the note body."
 
     user = FactoryBot.create(:user, display_name: user_name)
     FactoryBot.create(
       :note,
       user: user,
       title: note_title,
-      body: note_body,
+      body: note_body
     )
 
     visit "/#{user_name}/#{note_slug}"
 
     expect(page).to have_current_path(
-      "/#{user.display_name}/#{note_slug}",
+      "/#{user.display_name}/#{note_slug}"
     )
     expect(page).to have_content(note_title)
     expect(page).to have_content(note_body)
@@ -42,7 +42,7 @@ RSpec.describe 'Viewing Notes', type: :system do
     click_on user_note.title
 
     expect(page).to have_current_path(
-      "/#{user.display_name}/#{user_note.slug}",
+      "/#{user.display_name}/#{user_note.slug}"
     )
     expect(page).to have_content(user_note.title)
     expect(page).to have_content(user_note.body)
