@@ -12,7 +12,7 @@ gem "friendly_id"
 gem "pundit"
 gem "bootstrap", "~> 4.6.0", "< 5"
 gem "kramdown"
-gem "nokogiri", ">= 1.11.0.rc4"
+gem "nokogiri"
 
 group :development do
   gem "dotenv-rails"

@@ -305,7 +305,7 @@ DEPENDENCIES
   friendly_id
   kramdown
   listen (~> 3.7)
-  nokogiri (>= 1.11.0.rc4)
+  nokogiri
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rails
