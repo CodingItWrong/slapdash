@@ -31,7 +31,6 @@ group :test do
   gem "capybara"
   gem "factory_bot_rails"
   gem "rspec_junit_formatter"
-  gem "selenium-webdriver"
 end
 
 group :production do
