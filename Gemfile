@@ -4,7 +4,7 @@ ruby "3.2.0"
 
 gem "rails", "~> 7.0.4"
 gem "pg", ">= 0.18", "< 2.0"
-gem "puma", "~> 6.1"
+gem "puma", "~> 6.2"
 gem "sass-rails", ">= 6"
 gem "turbolinks", "~> 5"
 gem "devise"
