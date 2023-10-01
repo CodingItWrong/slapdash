@@ -4,7 +4,7 @@ ruby(File.read(".ruby-version").chomp)
 
 gem "rails", "~> 7.0.7"
 gem "pg", ">= 0.18", "< 2.0"
-gem "puma", "~> 6.3"
+gem "puma", "~> 6.4"
 gem "sass-rails", ">= 6"
 gem "turbolinks", "~> 5"
 gem "devise"
