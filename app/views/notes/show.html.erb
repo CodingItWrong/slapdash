@@ -20,7 +20,9 @@
       <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug), class: 'btn btn-light' %>
     <% end %>
     <% if policy(@note).destroy? %>
-      <%= form_with url: note_path(@user.display_name, @note.slug), method: :delete do |form| %>
+      <%= form_with url: note_path(@user.display_name, @note.slug),
+                    method: :delete,
+                    html: {style: 'display: inline'} do |form| %>
         <button type="submit" class="btn btn-danger">Delete</button>
       <% end %>
     <% end %>
