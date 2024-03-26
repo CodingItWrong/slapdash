@@ -10,6 +10,7 @@ Notes are available at the path `/username/notename`. Markdown is parsed with [k
 
 1. Ruby
 1. PostgreSQL (e.g. [Postgres.app][postgres-app])
+1. Yarn
 
 ### Testing
 
@@ -20,7 +21,9 @@ $ bin/rspec
 ### Running
 
 ```sh
-$ bin/rails server
+$ bin/dev
 ```
+
+(Necessary to run Sass bundler)
 
 [postgres-app]: http://postgresapp.com
