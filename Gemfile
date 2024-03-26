@@ -6,7 +6,6 @@ gem "rails", "~> 7.1.3"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 6.4"
 gem "sass-rails", ">= 6"
-gem "turbolinks", "~> 5"
 gem "devise"
 gem "friendly_id"
 gem "pundit"
@@ -24,8 +23,6 @@ end
 
 group :development, :test do
   gem "coderay"
-  gem "pry-byebug"
-  gem "pry-rails"
   gem "rspec-rails"
   gem "standard"
 end
