@@ -50,7 +50,11 @@ jobs:
       - run: yarn build:css
 
       # lint
-      - run: yarn lint
+      - run:
+          name: run linting checks
+          command: |
+            bundle exec standardrb
+            yarn lint
 
       # run tests!
       - run:
@@ -60,7 +64,6 @@ jobs:
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
 
             echo "testing rails"
-            bundle exec standardrb
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
