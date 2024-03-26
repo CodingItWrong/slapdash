@@ -31,5 +31,8 @@ module NotesRails
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # workaround for https://github.com/hotwired/turbo-rails/issues/512#issuecomment-1806570740
+    Rails.autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels")
   end
 end
