@@ -9,3 +9,7 @@ Prism.manual = true
 document.addEventListener("turbo:load", function(){
   Prism.highlightAll();
 });
+
+document.addEventListener("turbo:frame-render", function(){
+  Prism.highlightAll();
+});
