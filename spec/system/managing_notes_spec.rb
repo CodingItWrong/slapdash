@@ -70,7 +70,7 @@ RSpec.describe "Managing Notes", type: :system do
       old_body = "This is the note body."
 
       new_title = "New Title"
-      new_slug = "new-title"
+      # new_slug = "new-title"
       new_body = "This is the new body."
 
       user = FactoryBot.create(:user)
