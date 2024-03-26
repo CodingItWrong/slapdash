@@ -16,6 +16,7 @@ gem "sprockets-rails"
 gem "importmap-rails"
 gem "cssbundling-rails", "~> 1.4"
 gem "turbo-rails"
+gem "stimulus-rails"
 
 group :development do
   gem "dotenv-rails"
