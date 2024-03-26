@@ -15,6 +15,7 @@ gem "nokogiri"
 
 # frontend
 gem "importmap-rails"
+gem "cssbundling-rails", "~> 1.4"
 
 group :development do
   gem "dotenv-rails"
