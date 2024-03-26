@@ -14,6 +14,9 @@ gem "bootstrap", "~> 4.6.0", "< 5"
 gem "kramdown"
 gem "nokogiri"
 
+# frontend
+gem "importmap-rails"
+
 group :development do
   gem "dotenv-rails"
   gem "listen", "~> 3.9"
