@@ -5,11 +5,9 @@ ruby(File.read(".ruby-version").chomp)
 gem "rails", "~> 7.1.3"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 6.4"
-gem "sass-rails", ">= 6"
 gem "devise"
 gem "friendly_id"
 gem "pundit"
-gem "bootstrap", "~> 4.6.0", "< 5"
 gem "kramdown"
 gem "nokogiri"
 
