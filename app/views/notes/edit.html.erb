@@ -15,4 +15,6 @@
   </ol>
 </nav>
 
-<%= render 'form' %>
+<%= turbo_frame_tag(@note) do %>
+  <%= render 'form' %>
+<% end %>
