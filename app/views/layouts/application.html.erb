@@ -30,9 +30,10 @@
                 <%= link_to 'My Notes', notes_path(current_user.display_name), class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%= form_with url: destroy_user_session_path, method: :delete do |form| %>
-                  <%= form.submit 'Sign Out', class: 'nav-link' %>
-                <% end %>
+                <%= link_to 'Sign Out',
+                            destroy_user_session_path,
+                            class: 'nav-link',
+                            data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
               </li>
             </ul>
           </div>
