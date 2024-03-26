@@ -24,7 +24,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "Gemfile.lock" }}
+            - v3-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v3-dependencies-
 
@@ -34,16 +34,20 @@ jobs:
             gem update bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
+            yarn install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
             - vendor/bundle
-          key: v3-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v3-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
       # Database setup
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
+
+      # build CSS
+      - run: yarn build:css
 
       # run tests!
       - run:
