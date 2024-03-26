@@ -13,3 +13,4 @@ document.addEventListener("turbo:load", function(){
 document.addEventListener("turbo:frame-render", function(){
   Prism.highlightAll();
 });
+import "controllers"
