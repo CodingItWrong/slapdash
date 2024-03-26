@@ -23,6 +23,7 @@
       <% if policy(@note).destroy? %>
         <%= form_with url: note_path(@user.display_name, @note.slug),
                       method: :delete,
+                      data: {'turbo-frame': '_top'},
                       html: {
                         style: 'display: inline',
                         onsubmit: 'return confirm("Are you sure you want to delete this page?")'
