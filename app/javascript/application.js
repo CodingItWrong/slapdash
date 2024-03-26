@@ -2,3 +2,9 @@
 
 import "prism/prism"
 import * as bootstrap from "bootstrap"
+
+Prism.manual = true
+
+document.addEventListener("DOMContentLoaded", function(){
+  Prism.highlightAll();
+});
