@@ -346,6 +346,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   sass-rails (>= 6)
+  sprockets-rails
   standard
 
 RUBY VERSION

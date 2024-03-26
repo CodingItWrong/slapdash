@@ -14,6 +14,7 @@ gem "kramdown"
 gem "nokogiri"
 
 # frontend
+gem "sprockets-rails"
 gem "importmap-rails"
 
 group :development do
