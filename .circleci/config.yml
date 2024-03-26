@@ -49,6 +49,9 @@ jobs:
       # build CSS
       - run: yarn build:css
 
+      # lint
+      - run: yarn lint
+
       # run tests!
       - run:
           name: run tests
