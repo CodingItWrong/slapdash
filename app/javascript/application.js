@@ -8,3 +8,4 @@ Prism.manual = true
 document.addEventListener("DOMContentLoaded", function(){
   Prism.highlightAll();
 });
+import "@hotwired/turbo-rails"
