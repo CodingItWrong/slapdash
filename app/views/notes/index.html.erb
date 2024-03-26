@@ -16,8 +16,15 @@
   </div>
 <% end %>
 
-<div class="list-group mb-3">
-  <% @notes.each do |note| %>
-    <%= link_to note.title, note_path(@user, note), class: 'list-group-item list-group-item-action' %>
-  <% end %>
-</div>
+<form data-controller="filter">
+  <input type="text" data-filter-target="filterTextField" data-action="keyup->filter#update" class="form-control mb-2" placeholder="search" />
+
+  <div class="list-group mb-3">
+    <% @notes.each do |note| %>
+      <%= link_to note.title,
+                  note_path(@user, note),
+                  class: 'list-group-item list-group-item-action',
+                  'data-filter-target': "listItem" %>
+    <% end %>
+  </div>
+</form>
