@@ -14,7 +14,7 @@
 
 <h1><%= @note.title %></h1>
 
-<%= turbo_frame_tag(@note) do %>
+<%= turbo_frame_tag(@note, class: 'full-height') do %>
   <% if policy(@note).update? || policy(@note).destroy? %>
     <div class="mb-3">
       <% if policy(@note).update? %>
