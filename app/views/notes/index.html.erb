@@ -17,7 +17,7 @@
 <% end %>
 
 <form data-controller="filter">
-  <input type="text" data-filter-target="filterTextField" data-action="keyup->filter#update" class="form-control mb-2" placeholder="search" />
+  <input type="search" data-filter-target="filterTextField" data-action="keyup->filter#update" class="form-control mb-2" placeholder="search" />
 
   <div class="list-group mb-3">
     <% @notes.each do |note| %>
