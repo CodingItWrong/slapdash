@@ -34,7 +34,7 @@ class NotesController < ApplicationController
   def update
     authorize @note
     if @note.update(note_params)
-      render :show, notice: "Note updated"
+      redirect_to note_path(params[:user_display_name], @note), notice: "Note updated"
     else
       @note.restore_attributes([:slug])
       render :edit
