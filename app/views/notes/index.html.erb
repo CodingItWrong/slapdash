@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<form data-controller="filter">
+<form data-controller="filter" onsubmit="return false">
   <input type="search" data-filter-target="filterTextField" data-action="keyup->filter#update" class="form-control mb-2" placeholder="search" />
 
   <div class="list-group mb-3">
