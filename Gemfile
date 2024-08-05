@@ -25,6 +25,7 @@ end
 
 group :development, :test do
   gem "coderay"
+  gem "debug", ">= 1.0.0"
   gem "rspec-rails"
   gem "standard"
 end
