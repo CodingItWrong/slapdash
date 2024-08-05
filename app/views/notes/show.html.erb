@@ -14,26 +14,24 @@
 
 <h1><%= @note.title %></h1>
 
-<%= turbo_frame_tag(@note, class: 'full-height') do %>
-  <% if policy(@note).update? || policy(@note).destroy? %>
-    <div class="mb-3">
-      <% if policy(@note).update? %>
-        <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug), class: 'btn btn-light' %>
-      <% end %>
-      <% if policy(@note).destroy? %>
-        <%= link_to 'Delete',
-                    note_path(@user.display_name, @note.slug),
-                    class: 'btn btn-danger',
-                    data: {
-                      turbo_method: :delete,
-                      turbo_confirm: 'Are you sure you want to delete this page?',
-                      turbo_frame: '_top',
-                    } %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="rendered-markdown">
-    <%= raw markdown_to_html(@note.body) %>
+<% if policy(@note).update? || policy(@note).destroy? %>
+  <div class="mb-3">
+    <% if policy(@note).update? %>
+      <%= link_to 'Edit', edit_note_path(@user.display_name, @note.slug), class: 'btn btn-light' %>
+    <% end %>
+    <% if policy(@note).destroy? %>
+      <%= link_to 'Delete',
+                  note_path(@user.display_name, @note.slug),
+                  class: 'btn btn-danger',
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: 'Are you sure you want to delete this page?',
+                    turbo_frame: '_top',
+                  } %>
+    <% end %>
   </div>
 <% end %>
+
+<div class="rendered-markdown">
+  <%= raw markdown_to_html(@note.body) %>
+</div>
