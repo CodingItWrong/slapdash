@@ -176,7 +176,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
-    puma (6.4.3)
+    puma (6.5.0)
       nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
@@ -331,7 +331,7 @@ DEPENDENCIES
   listen (~> 3.9)
   nokogiri
   pg (>= 0.18, < 2.0)
-  puma (~> 6.4)
+  puma (~> 6.5)
   pundit
   rack-attack
   rails (~> 7.2.2)
