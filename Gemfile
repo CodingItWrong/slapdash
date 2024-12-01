@@ -5,7 +5,7 @@ ruby file: ".ruby-version"
 gem "rails", "~> 8.0.0"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 6.5"
-gem "devise"
+gem "devise", git: "https://github.com/heartcombo/devise.git", branch: "main" # https://github.com/heartcombo/devise/issues/5705#issuecomment-2496064620
 gem "friendly_id"
 gem "pundit"
 gem "kramdown"
