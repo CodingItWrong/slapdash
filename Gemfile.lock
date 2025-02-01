@@ -183,7 +183,7 @@ GEM
       date
       stringio
     public_suffix (5.0.4)
-    puma (6.5.0)
+    puma (6.6.0)
       nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
@@ -339,7 +339,7 @@ DEPENDENCIES
   listen (~> 3.9)
   nokogiri
   pg (>= 0.18, < 2.0)
-  puma (~> 6.5)
+  puma (~> 6.6)
   pundit
   rack-attack
   rails (~> 8.0.1)
