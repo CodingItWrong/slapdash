@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 8.1.0"
+gem "rails", "~> 8.1.1"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 7.1"
 gem "devise", git: "https://github.com/heartcombo/devise.git", branch: "main" # https://github.com/heartcombo/devise/issues/5705#issuecomment-2496064620
