@@ -20,7 +20,7 @@ gem "stimulus-rails"
 
 group :development do
   gem "dotenv-rails"
-  gem "listen", "~> 3.9"
+  gem "listen", "~> 3.10"
 end
 
 group :development, :test do
