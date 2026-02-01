@@ -4,7 +4,7 @@ ruby file: ".ruby-version"
 
 gem "rails", "~> 8.1.2"
 gem "pg", ">= 0.18", "< 2.0"
-gem "puma", "~> 7.1"
+gem "puma", "~> 7.2"
 gem "devise", git: "https://github.com/heartcombo/devise.git", branch: "main" # https://github.com/heartcombo/devise/issues/5705#issuecomment-2496064620
 gem "friendly_id"
 gem "pundit"
