@@ -2,7 +2,7 @@
 
 pin "application"
 pin_all_from "vendor/javascript/prism", under: "prism"
-pin "bootstrap", to: "bootstrap.min.js"
+pin "bootstrap", to: "bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
 pin "@hotwired/turbo-rails", to: "turbo.min.js"
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
