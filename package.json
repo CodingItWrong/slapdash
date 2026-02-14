@@ -5,14 +5,8 @@
     "node": "24.x"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "nodemon": "^3.1.0",
-    "postcss": "^8.4.38",
-    "postcss-cli": "^11.0.0",
-    "sass": "^1.72.0"
+    "bootstrap-icons": "^1.11.3"
   },
   "scripts": {
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
@@ -25,8 +19,13 @@
     "lint": "npm run lint:eslint && npm run lint:format"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5"
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "prettier": "^3.2.5",
+    "sass": "^1.72.0"
   }
 }
