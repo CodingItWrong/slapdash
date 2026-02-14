@@ -38,4 +38,5 @@ end
 
 group :production do
   gem "rack-attack"
+  gem "thruster", require: false
 end
