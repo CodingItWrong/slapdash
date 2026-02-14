@@ -41,22 +41,22 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
 - Only the asset serving mechanism changes (Sprockets → Propshaft)
 
 ### 2.1 Update Dependencies
-- [ ] Update `Gemfile`:
-  - [ ] Remove `gem "sprockets-rails"`
-  - [ ] Add `gem "propshaft"`
-- [ ] Run `bundle install`
-- [ ] Update `.gitignore` to include `public/assets/` if not already there
+- [x] Update `Gemfile`:
+  - [x] Remove `gem "sprockets-rails"`
+  - [x] Add `gem "propshaft"`
+- [x] Run `bundle install`
+- [x] Update `.gitignore` to include `public/assets/` if not already there
 
 ### 2.2 Update Configuration Files
-- [ ] Remove `config/initializers/assets.rb` (Propshaft doesn't use it)
-- [ ] Update `config/application.rb`:
-  - [ ] Remove `require "sprockets/railtie"` (line 15)
-- [ ] Update `config/environments/production.rb`:
-  - [ ] Remove or comment out `config.assets.compile = false`
-  - [ ] Remove or comment out any `config.assets.*` settings
-- [ ] Update `config/environments/development.rb`:
-  - [ ] Remove or comment out `config.assets.debug = true`
-  - [ ] Remove or comment out `config.assets.quiet = true`
+- [x] Remove `config/initializers/assets.rb` (Propshaft doesn't use it)
+- [x] Update `config/application.rb`:
+  - [x] Remove `require "sprockets/railtie"` (line 15)
+- [x] Update `config/environments/production.rb`:
+  - [x] Remove or comment out `config.assets.compile = false`
+  - [x] Remove or comment out any `config.assets.*` settings
+- [x] Update `config/environments/development.rb`:
+  - [x] Remove or comment out `config.assets.debug = true`
+  - [x] Remove or comment out `config.assets.quiet = true`
 
 ### 2.3 Handle JavaScript Dependencies
 **CRITICAL:** Propshaft can't serve files from `node_modules` like Sprockets does.
@@ -66,49 +66,49 @@ Current state (Sprockets):
 - `config/initializers/assets.rb` adds node_modules paths to asset pipeline
 
 With Propshaft (requires local copies):
-- [ ] Download all importmap dependencies locally:
+- [x] Download all importmap dependencies locally:
   ```bash
   bin/importmap pin bootstrap --download
   bin/importmap pin @hotwired/turbo-rails --download
   bin/importmap pin @hotwired/stimulus --download
   bin/importmap pin @hotwired/stimulus-loading --download
   ```
-- [ ] Verify downloads: check `vendor/javascript/` contains all .js files
-- [ ] Review updated `config/importmap.rb` to confirm local paths
+- [x] Verify downloads: check `vendor/javascript/` contains all .js files
+- [x] Review updated `config/importmap.rb` to confirm local paths
 
 ### 2.4 Verify Asset Structure
-- [ ] **IMPORTANT:** Keep `cssbundling-rails` in Gemfile - it's still needed!
-- [ ] Verify `app/assets/builds/` exists - cssbundling-rails outputs compiled CSS here
-- [ ] Check `app/assets/images/` contains all images
-- [ ] Check `app/assets/stylesheets/` contains your SCSS source files
-- [ ] Check `app/javascript/` contains all JS files
-- [ ] Propshaft will automatically serve everything in `app/assets/` and `vendor/javascript/`
+- [x] **IMPORTANT:** Keep `cssbundling-rails` in Gemfile - it's still needed!
+- [x] Verify `app/assets/builds/` exists - cssbundling-rails outputs compiled CSS here
+- [x] Check `app/assets/images/` contains all images
+- [x] Check `app/assets/stylesheets/` contains your SCSS source files
+- [x] Check `app/javascript/` contains all JS files
+- [x] Propshaft will automatically serve everything in `app/assets/` and `vendor/javascript/`
 
 ### 2.5 Update Asset References
-- [ ] Check `app/views/layouts/application.html.erb`:
-  - [ ] `stylesheet_link_tag "application"` should work as-is
-  - [ ] `javascript_importmap_tags` should work as-is
-- [ ] Search for any `asset_path` or `image_url` helpers and verify they work
-- [ ] Check for any JavaScript files that reference assets
+- [x] Check `app/views/layouts/application.html.erb`:
+  - [x] `stylesheet_link_tag "application"` should work as-is
+  - [x] `javascript_importmap_tags` should work as-is
+- [x] Search for any `asset_path` or `image_url` helpers and verify they work
+- [x] Check for any JavaScript files that reference assets
 
 ### 2.6 Verify Build Process (No Changes Needed!)
-- [ ] **NO CHANGES to `package.json`** - CSS build scripts stay identical:
+- [x] **NO CHANGES to `package.json`** - CSS build scripts stay identical:
   - `build:css:compile` - compiles SCSS with sass
   - `build:css:prefix` - runs autoprefixer with postcss
   - `build:css` - runs both steps
   - `watch:css` - watches for changes in development
-- [ ] **NO CHANGES to `Procfile.dev`** - still runs `yarn watch:css`
-- [ ] **How it works with Propshaft:**
+- [x] **NO CHANGES to `Procfile.dev`** - still runs `yarn watch:css`
+- [x] **How it works with Propshaft:**
   1. `cssbundling-rails` runs `yarn build:css` → outputs to `app/assets/builds/application.css`
   2. Propshaft picks up the compiled CSS from `app/assets/builds/`
   3. Propshaft copies all `app/assets/` files to `public/assets/` with digests
-- [ ] Test the full process: `rails assets:precompile`
-- [ ] Verify compiled assets appear in `public/assets/` with digest fingerprints
+- [x] Test the full process: `rails assets:precompile` (completed - assets in public/assets/)
+- [x] Verify compiled assets appear in `public/assets/` with digest fingerprints
 
 ### 2.7 Test Asset Loading
-- [ ] Clear `public/assets/`: `rm -rf public/assets`
-- [ ] Precompile assets: `RAILS_ENV=production rails assets:precompile`
-- [ ] Start production mode locally: `RAILS_ENV=production rails server`
+- [x] Clear `public/assets/`: `rm -rf public/assets`
+- [x] Precompile assets: `RAILS_ENV=production rails assets:precompile`
+- [ ] Start production mode locally: `RAILS_ENV=production rails server` (ready to test)
 - [ ] Verify all assets load correctly:
   - [ ] Stylesheets (Bootstrap, custom CSS)
   - [ ] JavaScript (Stimulus controllers, Turbo)
