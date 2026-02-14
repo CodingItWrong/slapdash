@@ -12,7 +12,7 @@ gem "kramdown"
 gem "nokogiri"
 
 # frontend
-gem "sprockets-rails"
+gem "propshaft"
 gem "importmap-rails"
 gem "cssbundling-rails", "~> 1.4"
 gem "turbo-rails"
