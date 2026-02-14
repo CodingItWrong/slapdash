@@ -34,6 +34,12 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
 
 **Goal:** Replace Sprockets with Propshaft for modern asset pipeline.
 
+**Important:** Propshaft only changes how assets are *served*, not how CSS is *built*.
+- `cssbundling-rails` gem stays (still needed to compile SCSS → CSS)
+- `package.json` build scripts stay the same (sass + postcss)
+- `Procfile.dev` stays the same (still runs `yarn watch:css`)
+- Only the asset serving mechanism changes (Sprockets → Propshaft)
+
 ### 2.1 Update Dependencies
 - [ ] Update `Gemfile`:
   - [ ] Remove `gem "sprockets-rails"`
@@ -52,26 +58,54 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
   - [ ] Remove or comment out `config.assets.debug = true`
   - [ ] Remove or comment out `config.assets.quiet = true`
 
-### 2.3 Reorganize Assets
-- [ ] Move precompiled Bootstrap JS from manual precompile list (no longer needed with Propshaft)
-- [ ] Verify `app/assets/builds/` is still being used for CSS output from cssbundling-rails
-- [ ] Ensure `app/assets/images/` contains all images
-- [ ] Ensure `app/javascript/` contains all JS files
+### 2.3 Handle JavaScript Dependencies
+**CRITICAL:** Propshaft can't serve files from `node_modules` like Sprockets does.
 
-### 2.4 Update Asset References
+Current state (Sprockets):
+- JS files (`bootstrap.min.js`, `turbo.min.js`, etc.) served from `node_modules/` via assets.rb config
+- `config/initializers/assets.rb` adds node_modules paths to asset pipeline
+
+With Propshaft (requires local copies):
+- [ ] Download all importmap dependencies locally:
+  ```bash
+  bin/importmap pin bootstrap --download
+  bin/importmap pin @hotwired/turbo-rails --download
+  bin/importmap pin @hotwired/stimulus --download
+  bin/importmap pin @hotwired/stimulus-loading --download
+  ```
+- [ ] Verify downloads: check `vendor/javascript/` contains all .js files
+- [ ] Review updated `config/importmap.rb` to confirm local paths
+
+### 2.4 Verify Asset Structure
+- [ ] **IMPORTANT:** Keep `cssbundling-rails` in Gemfile - it's still needed!
+- [ ] Verify `app/assets/builds/` exists - cssbundling-rails outputs compiled CSS here
+- [ ] Check `app/assets/images/` contains all images
+- [ ] Check `app/assets/stylesheets/` contains your SCSS source files
+- [ ] Check `app/javascript/` contains all JS files
+- [ ] Propshaft will automatically serve everything in `app/assets/` and `vendor/javascript/`
+
+### 2.5 Update Asset References
 - [ ] Check `app/views/layouts/application.html.erb`:
   - [ ] `stylesheet_link_tag "application"` should work as-is
   - [ ] `javascript_importmap_tags` should work as-is
 - [ ] Search for any `asset_path` or `image_url` helpers and verify they work
 - [ ] Check for any JavaScript files that reference assets
 
-### 2.5 Update Build Process
-- [ ] Update `package.json` scripts if needed (CSS bundling should still work)
-- [ ] Update `Procfile.dev` if needed (should work as-is with css watcher)
-- [ ] Test asset compilation: `rails assets:precompile`
-- [ ] Verify compiled assets are in `public/assets/`
+### 2.6 Verify Build Process (No Changes Needed!)
+- [ ] **NO CHANGES to `package.json`** - CSS build scripts stay identical:
+  - `build:css:compile` - compiles SCSS with sass
+  - `build:css:prefix` - runs autoprefixer with postcss
+  - `build:css` - runs both steps
+  - `watch:css` - watches for changes in development
+- [ ] **NO CHANGES to `Procfile.dev`** - still runs `yarn watch:css`
+- [ ] **How it works with Propshaft:**
+  1. `cssbundling-rails` runs `yarn build:css` → outputs to `app/assets/builds/application.css`
+  2. Propshaft picks up the compiled CSS from `app/assets/builds/`
+  3. Propshaft copies all `app/assets/` files to `public/assets/` with digests
+- [ ] Test the full process: `rails assets:precompile`
+- [ ] Verify compiled assets appear in `public/assets/` with digest fingerprints
 
-### 2.6 Test Asset Loading
+### 2.7 Test Asset Loading
 - [ ] Clear `public/assets/`: `rm -rf public/assets`
 - [ ] Precompile assets: `RAILS_ENV=production rails assets:precompile`
 - [ ] Start production mode locally: `RAILS_ENV=production rails server`
@@ -84,7 +118,7 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
   - [ ] Verify hot reloading of CSS still works
   - [ ] Verify JavaScript changes are reflected
 
-### 2.7 Deployment
+### 2.8 Deployment
 - [ ] Commit changes: `git add -A && git commit -m "Switch from Sprockets to Propshaft"`
 - [ ] Ensure deployment process runs `rails assets:precompile`
 - [ ] Deploy to production
@@ -149,8 +183,10 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
 ### If Phase 2 Fails
 - [ ] Add `gem "sprockets-rails"` back to Gemfile
 - [ ] Remove `gem "propshaft"`
+- [ ] **Keep `gem "cssbundling-rails"`** - don't remove it!
 - [ ] Restore `config/initializers/assets.rb`
 - [ ] Restore `require "sprockets/railtie"` in `config/application.rb`
+- [ ] Restore any `config.assets.*` settings
 - [ ] Run `bundle install`
 - [ ] Deploy rollback
 
@@ -169,3 +205,27 @@ Implementation plan for upgrading to Rails 8.0 defaults, Propshaft, and Thruster
 - Keep rollback plans ready
 - Phase 2 (Propshaft) is the riskiest - plan extra testing time
 - Consider deploying Phase 2 during low-traffic hours
+
+### Understanding the Asset Pipeline (Phase 2)
+
+**cssbundling-rails vs Propshaft - They do different jobs:**
+- `cssbundling-rails` = CSS **build** system (SCSS → CSS compilation)
+- `Propshaft` = Asset **serving** system (delivers compiled assets to browsers)
+
+**The flow:**
+1. You edit `app/assets/stylesheets/*.scss` files
+2. `cssbundling-rails` runs `yarn build:css` (sass + postcss)
+3. Compiled CSS is output to `app/assets/builds/application.css`
+4. Propshaft picks up the compiled CSS from `app/assets/builds/`
+5. Propshaft copies it to `public/assets/application-[digest].css`
+6. Your app serves the digested asset to users
+
+**What changes in Phase 2:**
+- ❌ Sprockets (old asset serving) → ✅ Propshaft (new asset serving)
+
+**What stays the same:**
+- ✅ cssbundling-rails (still compiles your SCSS)
+- ✅ package.json scripts (sass + postcss commands)
+- ✅ Procfile.dev (still runs yarn watch:css)
+- ✅ app/assets/stylesheets/ (your SCSS source files)
+- ✅ app/assets/builds/ (compiled CSS output)
