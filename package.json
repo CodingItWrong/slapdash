@@ -4,28 +4,15 @@
   "engines": {
     "node": "24.x"
   },
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3"
-  },
   "scripts": {
-    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
-    "build:css": "yarn build:css:compile && yarn build:css:prefix",
-    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
-    "format": "npx prettier app/assets/stylesheets app/javascript --write",
-    "lint:format": "npx prettier app/assets/stylesheets app/javascript --check",
-    "lint:eslint": "eslint .  --max-warnings=0",
-    "lint": "npm run lint:eslint && npm run lint:format"
+    "format": "pnpm prettier app/assets/tailwind app/javascript --write",
+    "lint:format": "pnpm prettier app/assets/tailwind app/javascript --check",
+    "lint:eslint": "pnpm eslint . --max-warnings=0",
+    "lint": "pnpm run lint:eslint && pnpm run lint:format"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "nodemon": "^3.1.0",
-    "postcss": "^8.4.38",
-    "postcss-cli": "^11.0.0",
-    "prettier": "^3.2.5",
-    "sass": "^1.72.0"
+    "prettier": "^3.2.5"
   }
 }
