@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+@plugin "./vendor/daisyui.mjs" {
+  themes:
+    light --default,
+    dim --prefersdark;
+}
+
+/*
+  Override DaisyUI primary color to preserve the original orange brand (#ff784e).
+  #ff784e in OKLCH ≈ oklch(71.8% 0.184 37.5)
+  Applied to :root so it affects both light and dim themes.
+*/
+:root,
+[data-theme] {
+  --color-primary: oklch(71.8% 0.184 37.5);
+  --color-primary-content: oklch(100% 0 0);
+}
+
+/* Syntax highlighting (Prism.js) */
+@import '../stylesheets/prism.css';
+
+/* ─── Layout ─────────────────────────────────────────────── */
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-height {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Typography / Prose ─────────────────────────────────── */
+
+code {
+  color: inherit;
+}
+
+blockquote {
+  border-left: solid 2px oklch(var(--color-base-content) / 0.3);
+  padding-left: 0.625rem;
+}
+
+/* ─── Markdown editor textarea ───────────────────────────── */
+
+.markdown-editor {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  flex: 1;
+}
+
+/* ─── Form utilities ─────────────────────────────────────── */
+
+/* Always show validation error text (mirrors Bootstrap's .invalid-feedback) */
+.field-error {
+  display: block;
+}
+
+.form-group__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Navbar ─────────────────────────────────────────────── */
+
+.navbar-logo {
+  width: 30px;
+  height: 30px;
+}

@@ -3,9 +3,6 @@
 import '@hotwired/turbo-rails';
 import 'prism/prism';
 
-// eslint-disable-next-line no-unused-vars
-import * as bootstrap from 'bootstrap';
-
 Prism.manual = true;
 
 document.addEventListener('turbo:load', function () {

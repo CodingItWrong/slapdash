@@ -1,24 +1,26 @@
-<h2>Change your password</h2>
+<h2 class="text-2xl font-bold mb-4">Change your password</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
   <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
+  <fieldset class="fieldset mb-3">
+    <%= f.label :password, "New password", class: 'fieldset-legend' %>
     <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <span class="text-sm text-base-content/60">(<%= @minimum_password_length %> characters minimum)</span>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
+    <%= f.password_field :password, autofocus: true, autocomplete: "new-password",
+                         class: 'input input-bordered w-full' %>
+  </fieldset>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  <fieldset class="fieldset mb-3">
+    <%= f.label :password_confirmation, "Confirm new password", class: 'fieldset-legend' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                         class: 'input input-bordered w-full' %>
+  </fieldset>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
+  <div class="mb-3">
+    <%= f.submit "Change my password", class: 'btn btn-primary' %>
   </div>
 <% end %>
 

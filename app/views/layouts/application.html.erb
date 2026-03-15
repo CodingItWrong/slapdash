@@ -8,55 +8,69 @@
     <%= render 'shared/favicons' %>
 
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-3">
-      <div class="container">
-        <%= link_to root_path, class: 'navbar-brand' do %>
-          <%= image_tag('logo-30@3x.png', class: 'navbar-logo mr-1') %>
-          Slapdash
-        <% end %>
+    <div class="navbar bg-base-300 shadow-sm mb-3">
+      <div class="container mx-auto px-4 flex items-center">
+        <div class="flex-1">
+          <%= link_to root_path, class: 'btn btn-ghost text-xl' do %>
+            <%= image_tag('logo-30@3x.png', class: 'navbar-logo mr-1') %>
+            Slapdash
+          <% end %>
+        </div>
 
         <% if user_signed_in? %>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <%= link_to 'My Notes', notes_path(current_user.display_name), class: 'nav-link' %>
-              </li>
-              <li class="nav-item">
+          <%# Mobile: dropdown menu %>
+          <div class="dropdown dropdown-end lg:hidden">
+            <div tabindex="0" role="button" class="btn btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </div>
+            <ul tabindex="0"
+                class="menu menu-sm dropdown-content bg-base-200 rounded-box z-50 mt-3 w-52 p-2 shadow">
+              <li><%= link_to 'My Notes', notes_path(current_user.display_name) %></li>
+              <li>
                 <%= link_to 'Sign Out',
                             destroy_user_session_path,
-                            class: 'nav-link',
+                            data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+              </li>
+            </ul>
+          </div>
+
+          <%# Desktop: inline menu %>
+          <div class="hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+              <li><%= link_to 'My Notes', notes_path(current_user.display_name) %></li>
+              <li>
+                <%= link_to 'Sign Out',
+                            destroy_user_session_path,
                             data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
               </li>
             </ul>
           </div>
         <% end %>
       </div>
-    </nav>
+    </div>
 
-    <div class="container full-height">
-      <div class="row full-height">
-        <div class="col-sm full-height">
-          <% if notice.present? %>
-            <div class="alert alert-success" role="alert">
-              <%= notice %>
-            </div>
-          <% end %>
-          <% if alert.present? %>
-            <div class="alert alert-danger" role="alert">
-              <%= alert %>
-            </div>
-          <% end %>
+    <div class="container mx-auto px-4 full-height">
+      <div class="full-height">
+        <% if notice.present? %>
+          <div role="alert" class="alert alert-success mb-3">
+            <%= notice %>
+          </div>
+        <% end %>
+        <% if alert.present? %>
+          <div role="alert" class="alert alert-error mb-3">
+            <%= alert %>
+          </div>
+        <% end %>
 
-          <%= yield %>
-        </div>
+        <%= yield %>
       </div>
     </div>
   </body>

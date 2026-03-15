@@ -1,18 +1,13 @@
 <% content_for :title do %>
-  Edit | <%= @note.title %>
-  | <%= @user.display_name %>'s Notes
+  Edit | <%= @note.title %> | <%= @user.display_name %>'s Notes
 <% end %>
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to @user.display_name, notes_path(@user.display_name) %>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-      <%= link_to @note.title, note_path(@user.display_name, @note.slug) %>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">Edit</li>
-  </ol>
+<nav aria-label="breadcrumb" class="text-sm breadcrumbs mb-3">
+  <ul>
+    <li><%= link_to @user.display_name, notes_path(@user.display_name) %></li>
+    <li><%= link_to @note.title, note_path(@user.display_name, @note.slug) %></li>
+    <li class="text-base-content/60">Edit</li>
+  </ul>
 </nav>
 
 <%= render 'form' %>

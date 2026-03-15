@@ -8,9 +8,8 @@ The application uses a modern Rails asset pipeline with the following key compon
 
 - **Propshaft** - Asset serving and fingerprinting
 - **Importmap-rails** - JavaScript module management without bundling
-- **cssbundling-rails** - CSS compilation using external tools (Sass, PostCSS)
-- **Bootstrap** - UI framework (downloaded from npm)
-- **Bootstrap Icons** - Icon library (downloaded from npm)
+- **tailwindcss-rails** - CSS compilation using the bundled Tailwind CSS CLI binary
+- **DaisyUI** - UI component library (committed as vendor `.mjs` files in `app/assets/tailwind/`)
 
 ## What's Committed to the Repository
 
@@ -23,10 +22,12 @@ app/assets/
 ├── images/
 │   └── logo-30@3x.png          # Application images
 ├── stylesheets/
-│   ├── application.bootstrap.scss  # Main SCSS entry point
-│   ├── custom.scss              # Custom styles
-│   ├── overrides.scss           # Bootstrap overrides
-│   └── prism.css                # Syntax highlighting styles
+│   └── prism.css                # Syntax highlighting styles (imported by application.css)
+├── tailwind/
+│   ├── application.css          # Tailwind CSS entry point
+│   └── vendor/
+│       ├── daisyui.mjs          # DaisyUI v5 plugin (vendored, committed)
+│       └── daisyui-theme.mjs    # DaisyUI theme plugin (vendored, committed)
 └── builds/
     └── .keep                    # Directory placeholder (contents ignored)
 
@@ -50,38 +51,40 @@ config/
 
 ### Configuration Files (Committed)
 
-- `Gemfile` - Ruby dependencies (propshaft, importmap-rails, cssbundling-rails)
-- `package.json` - Node.js dependencies and build scripts
+- `Gemfile` - Ruby dependencies (propshaft, importmap-rails, tailwindcss-rails)
+- `package.json` - Node.js dev dependencies (ESLint, Prettier) and scripts
+- `pnpm-lock.yaml` - pnpm lockfile
 - `config/importmap.rb` - JavaScript module mappings
 - `app/assets/config/manifest.js` - Propshaft asset paths
 
 ## What's Downloaded (Not Committed)
 
-### Downloaded from npm
+### Downloaded from pnpm (dev tooling only)
 
 ```
 node_modules/
-├── bootstrap/                   # Bootstrap CSS framework and JS
-├── bootstrap-icons/             # Bootstrap icon fonts
-├── sass/                        # Sass compiler
-├── postcss/                     # CSS post-processor
-├── autoprefixer/                # CSS vendor prefix automation
-└── nodemon/                     # File watcher for development
+├── eslint/                      # JavaScript linter
+├── eslint-config-prettier/      # ESLint + Prettier integration
+└── prettier/                    # Code formatter
 ```
 
-**Installed via:** `yarn install` or `npm install`
+**Installed via:** `pnpm install`
+
+Note: Bootstrap, Sass, PostCSS, Autoprefixer, and Nodemon have been removed. CSS is now compiled by the `tailwindcss-rails` gem's bundled binary — no Node.js involvement for CSS compilation.
+
+### Downloaded by tailwindcss-rails gem
+
+The `tailwindcss-rails` gem downloads the Tailwind CSS CLI binary to `bin/tailwindcss` on first use. This binary is not committed.
 
 ### Generated Build Artifacts (Not Committed)
 
 ```
 app/assets/builds/
-├── application.css              # Compiled CSS from SCSS
-└── bootstrap.min.js             # Copied Bootstrap JavaScript
+└── application.css              # Compiled CSS from Tailwind
 
 public/assets/
 ├── .manifest.json               # Propshaft digest mapping
 ├── application-[digest].css     # Fingerprinted CSS
-├── bootstrap.min-[digest].js    # Fingerprinted Bootstrap JS
 ├── logo-30@3x-[digest].png     # Fingerprinted images
 ├── prism/
 │   └── prism-[digest].js       # Fingerprinted Prism JS
@@ -96,26 +99,21 @@ When you run `bin/dev`:
 
 1. **Foreman** starts multiple processes defined in `Procfile.dev`:
    - `web` process: Rails server (`bin/rails server`)
-   - `css` process: CSS watcher (`yarn watch:css`)
+   - `css` process: Tailwind CSS watcher (`bin/rails tailwindcss:watch`)
 
 ### CSS Processing Pipeline (Development)
 
 ```
-1. Source SCSS files change in app/assets/stylesheets/
-   └─> Watched by nodemon (via yarn watch:css)
+1. Source CSS file changes in app/assets/tailwind/
+   └─> Watched by bin/rails tailwindcss:watch
 
-2. Nodemon triggers: yarn build:css
-   ├─> Step 1: Sass compilation
-   │   └─> sass compiles application.bootstrap.scss → app/assets/builds/application.css
-   │       • Imports Bootstrap SCSS from node_modules/bootstrap/scss/
-   │       • Imports Bootstrap Icons from node_modules/bootstrap-icons/
-   │       • Includes custom.scss and overrides.scss
-   │       • Library: Dart Sass (sass npm package)
-   │
-   └─> Step 2: PostCSS processing
-       └─> postcss adds vendor prefixes to app/assets/builds/application.css
-           • Library: Autoprefixer (via postcss-cli)
-           • Ensures cross-browser CSS compatibility
+2. Tailwind CLI rebuilds app/assets/builds/application.css
+   ├─> Processes @import "tailwindcss"
+   ├─> Loads DaisyUI plugin from ./daisyui.mjs
+   │   • Generates DaisyUI component classes
+   │   • Applies light (default) and dim (dark mode) themes
+   └─> Scans app/views/**/*.erb and app/javascript/**/*.js
+       • Includes only used utility classes
 
 3. Propshaft serves the file
    └─> Rails helper: <%= stylesheet_link_tag "application" %>
@@ -126,10 +124,8 @@ When you run `bin/dev`:
 ```
 
 **Key Libraries:**
-- **sass** (npm) - Dart Sass compiler that processes .scss files
-- **postcss-cli** (npm) - CLI tool to run PostCSS
-- **autoprefixer** (npm) - PostCSS plugin that adds vendor prefixes
-- **nodemon** (npm) - File watcher that triggers rebuilds
+- **tailwindcss-rails** (gem) - Provides Tailwind CSS CLI binary and Rake tasks
+- **DaisyUI** (committed `.mjs` vendor files) - UI component classes
 
 ### JavaScript Processing Pipeline (Development)
 
@@ -141,7 +137,6 @@ When you run `bin/dev`:
 2. Importmap resolves module names to paths
    └─> Config: config/importmap.rb
        • pin "application" → /assets/application.js
-       • pin "bootstrap", to: "bootstrap.min.js" → /assets/bootstrap.min.js
        • pin "@hotwired/turbo-rails", to: "turbo.min.js"
        • pin "@hotwired/stimulus", to: "stimulus.min.js"
        • Library: importmap-rails gem
@@ -193,23 +188,13 @@ When you run `bin/dev`:
 When deploying to production (e.g., during `rails assets:precompile`):
 
 ```
-1. CSS Build: yarn build
-   ├─> yarn build:css:compile
-   │   └─> Sass compiles SCSS → app/assets/builds/application.css
-   │       • Same process as development
-   │       • --no-source-map flag (no source maps in production)
-   │
-   └─> yarn build:css:prefix
-       └─> Autoprefixer adds vendor prefixes
-           • Ensures cross-browser compatibility
+1. CSS Build: bin/rails tailwindcss:build
+   └─> Tailwind CLI compiles app/assets/tailwind/application.css
+       → app/assets/builds/application.css
+       • Includes DaisyUI component styles
+       • Purges unused utility classes (content scanning)
 
-2. JavaScript Build: yarn build:js
-   └─> Copies Bootstrap JS: cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js
-       → app/assets/builds/bootstrap.min.js
-       • Pre-minified version from npm package
-       • No further processing needed
-
-3. Asset Precompilation: rails assets:precompile
+2. Asset Precompilation: rails assets:precompile
    └─> Propshaft processes all assets
        ├─> Reads: app/assets/config/manifest.js
        │   • //= link_tree ../images
@@ -228,8 +213,7 @@ When deploying to production (e.g., during `rails assets:precompile`):
 ```
 
 **Key Libraries:**
-- **sass** (npm) - Compiles SCSS to CSS
-- **autoprefixer** (npm) - Adds vendor prefixes
+- **tailwindcss-rails** (gem) - Compiles Tailwind CSS via bundled CLI binary
 - **propshaft** (gem) - Fingerprints and copies assets to public/
 
 ### Asset Serving in Production
@@ -267,7 +251,6 @@ When deploying to production (e.g., during `rails assets:precompile`):
        {
          "imports": {
            "application": "/assets/application-bbf8dd8b.js",
-           "bootstrap": "/assets/bootstrap.min-91dc4555.js",
            "@hotwired/turbo-rails": "/assets/turbo.min-86bf8853.js",
            ...
          }
@@ -289,20 +272,24 @@ When deploying to production (e.g., during `rails assets:precompile`):
 |-----|---------|------|
 | **propshaft** | Asset serving & fingerprinting | Serves assets in dev, fingerprints & copies to public/ in production |
 | **importmap-rails** | JavaScript module management | Generates import maps, manages JS dependencies without bundling |
-| **cssbundling-rails** | CSS build integration | Provides Rake tasks (`rails css:build`) to integrate external CSS tools |
+| **tailwindcss-rails** | CSS build integration | Provides bundled Tailwind CSS CLI binary and Rake tasks (`rails tailwindcss:build`) |
 | **turbo-rails** | Hotwire Turbo integration | Provides Turbo Drive, Frames, and Streams for SPA-like navigation |
 | **stimulus-rails** | Stimulus integration | Provides Stimulus framework for JavaScript controllers |
 
-### NPM Packages
+### NPM Packages (dev tooling only, managed by pnpm)
 
 | Package | Purpose | Role |
 |---------|---------|------|
-| **bootstrap** | UI framework | Provides SCSS source files and pre-built JavaScript |
-| **bootstrap-icons** | Icon library | Provides icon font files referenced in SCSS |
-| **sass** | SCSS compiler | Compiles .scss files to .css (Dart Sass implementation) |
-| **postcss** & **postcss-cli** | CSS post-processor | Runs PostCSS plugins on compiled CSS |
-| **autoprefixer** | CSS vendor prefixing | PostCSS plugin that adds browser-specific CSS prefixes |
-| **nodemon** | File watcher | Watches SCSS files and triggers rebuild on changes |
+| **eslint** | JavaScript linter | Lints JS files |
+| **eslint-config-prettier** | ESLint + Prettier integration | Disables ESLint rules that conflict with Prettier |
+| **prettier** | Code formatter | Formats JS and CSS files |
+
+### Vendor Files (Committed)
+
+| File | Purpose | Role |
+|------|---------|------|
+| `app/assets/tailwind/vendor/daisyui.mjs` | DaisyUI v5 plugin | Generates UI component classes (btn, input, menu, etc.) |
+| `app/assets/tailwind/vendor/daisyui-theme.mjs` | DaisyUI theme plugin | Provides light and dim themes |
 
 ## Asset Workflow Summary
 
@@ -312,9 +299,10 @@ When deploying to production (e.g., during `rails assets:precompile`):
 Developer edits file
     ↓
 ┌───────────────────────────────────────────┐
-│ CSS: Nodemon watches → Sass compiles     │
-│      → Autoprefixer processes             │
-│      → Propshaft serves (no digest)       │
+│ CSS: tailwindcss:watch detects change    │
+│      → Tailwind CLI rebuilds CSS         │
+│      → DaisyUI plugin generates styles   │
+│      → Propshaft serves (no digest)      │
 └───────────────────────────────────────────┘
     ↓
 ┌───────────────────────────────────────────┐
@@ -332,10 +320,10 @@ Browser loads and renders
 Deployment triggers
     ↓
 ┌───────────────────────────────────────────┐
-│ 1. yarn build                             │
-│    • Sass compiles SCSS → CSS             │
-│    • Autoprefixer processes CSS           │
-│    • Copy Bootstrap JS                    │
+│ 1. bin/rails tailwindcss:build            │
+│    • Tailwind CLI compiles CSS            │
+│    • DaisyUI plugin generates styles      │
+│    • Unused classes purged                │
 └───────────────────────────────────────────┘
     ↓
 ┌───────────────────────────────────────────┐
@@ -363,23 +351,17 @@ Deployment triggers
 bin/dev
 
 # Manually rebuild CSS
-yarn build:css
+bin/rails tailwindcss:build
 
-# Manually copy Bootstrap JS
-yarn build:js
-
-# Build all assets (CSS + JS)
-yarn build
+# Watch CSS for changes
+bin/rails tailwindcss:watch
 ```
 
 ### Production
 
 ```bash
-# Install dependencies
-yarn install
-
-# Build CSS and JS
-yarn build
+# Build CSS
+bin/rails tailwindcss:build
 
 # Precompile and fingerprint assets
 rails assets:precompile
@@ -407,14 +389,29 @@ bin/importmap json
 bin/importmap outdated
 ```
 
+### Linting and Formatting
+
+```bash
+# Format CSS and JS files
+pnpm run format
+
+# Run all linting checks
+pnpm run lint
+
+# Run only ESLint
+pnpm run lint:eslint
+
+# Run only Prettier check
+pnpm run lint:format
+```
+
 ## File Locations Quick Reference
 
 | Asset Type | Source Location | Build Output | Production Output |
 |------------|----------------|--------------|-------------------|
-| SCSS | `app/assets/stylesheets/` | `app/assets/builds/application.css` | `public/assets/application-[digest].css` |
+| CSS | `app/assets/tailwind/` | `app/assets/builds/application.css` | `public/assets/application-[digest].css` |
 | JS (app) | `app/javascript/` | *(none)* | `public/assets/**/*-[digest].js` |
 | JS (vendor) | `vendor/javascript/` | *(none)* | `public/assets/**/*-[digest].js` |
-| Bootstrap JS | `node_modules/bootstrap/` | `app/assets/builds/bootstrap.min.js` | `public/assets/bootstrap.min-[digest].js` |
 | Images | `app/assets/images/` | *(none)* | `public/assets/**/*-[digest].png` |
 | Manifest | - | - | `public/assets/.manifest.json` |
 
