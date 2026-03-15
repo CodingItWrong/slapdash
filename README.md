@@ -10,7 +10,7 @@ Notes are available at the path `/username/notename`. Markdown is parsed with [k
 
 1. Ruby
 1. PostgreSQL (e.g. [Postgres.app][postgres-app])
-1. pnpm
+1. Yarn
 
 ### Running
 
@@ -29,8 +29,8 @@ bin/rspec
 ### Linting & Formatting
 
 ```sh
-pnpm run lint        # run ESLint + Prettier check
-pnpm run format      # auto-format CSS and JS files
+yarn lint        # run ESLint + Prettier check
+yarn format      # auto-format CSS and JS files
 ```
 
 ## Stack

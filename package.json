@@ -5,10 +5,10 @@
     "node": "24.x"
   },
   "scripts": {
-    "format": "pnpm prettier app/assets/tailwind app/javascript --write",
-    "lint:format": "pnpm prettier app/assets/tailwind app/javascript --check",
-    "lint:eslint": "pnpm eslint . --max-warnings=0",
-    "lint": "pnpm run lint:eslint && pnpm run lint:format"
+    "format": "npx prettier app/assets/tailwind app/javascript --write",
+    "lint:format": "npx prettier app/assets/tailwind app/javascript --check",
+    "lint:eslint": "eslint . --max-warnings=0",
+    "lint": "yarn lint:eslint && yarn lint:format"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
