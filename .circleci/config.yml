@@ -34,7 +34,8 @@ jobs:
             gem update bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
-            npm install -g pnpm
+            corepack enable
+            corepack prepare pnpm@latest --activate
             pnpm install --frozen-lockfile
 
       - save_cache:
