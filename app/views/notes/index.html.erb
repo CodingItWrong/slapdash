@@ -23,7 +23,7 @@
          class="input input-bordered w-full mb-2"
          placeholder="search" />
 
-  <ul class="menu bg-base-100 rounded-box w-full mb-3">
+  <ul class="menu bg-base-100 rounded-box border border-base-300 w-full mb-3">
     <% @notes.each do |note| %>
       <li data-filter-target="listItem">
         <%= link_to note.title, note_path(@user, note) %>
