@@ -2,13 +2,13 @@
   <%= @user.display_name %>'s Notes
 <% end %>
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page"><%= @user.display_name %></li>
-  </ol>
+<nav aria-label="breadcrumb" class="text-sm breadcrumbs mb-3">
+  <ul>
+    <li class="text-base-content/60"><%= @user.display_name %></li>
+  </ul>
 </nav>
 
-<h1><%= @user.display_name %>'s Notes</h1>
+<h1 class="text-2xl font-bold mb-3"><%= @user.display_name %>'s Notes</h1>
 
 <% if policy(@note).create? %>
   <div class="mb-3">
@@ -17,14 +17,17 @@
 <% end %>
 
 <form data-controller="filter" onsubmit="return false">
-  <input type="search" data-filter-target="filterTextField" data-action="keyup->filter#update" class="form-control mb-2" placeholder="search" />
+  <input type="search"
+         data-filter-target="filterTextField"
+         data-action="keyup->filter#update"
+         class="input input-bordered w-full mb-2"
+         placeholder="search" />
 
-  <div class="list-group mb-3">
+  <ul class="menu bg-base-100 rounded-box w-full mb-3">
     <% @notes.each do |note| %>
-      <%= link_to note.title,
-                  note_path(@user, note),
-                  class: 'list-group-item list-group-item-action',
-                  'data-filter-target': "listItem" %>
+      <li data-filter-target="listItem">
+        <%= link_to note.title, note_path(@user, note) %>
+      </li>
     <% end %>
-  </div>
+  </ul>
 </form>

@@ -1,30 +1,40 @@
-<%= form_with model: @note, url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), method: @note.persisted? ? :patch : :post, local: true, class: 'full-height' do |f| %>
-  <div>
+<%= form_with model: @note,
+              url: @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name),
+              method: @note.persisted? ? :patch : :post,
+              local: true,
+              class: 'full-height' do |f| %>
+
+  <div class="flex gap-2 mb-3">
     <%= f.submit 'Save', class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name), class: 'btn btn-light' %>
+    <%= link_to 'Cancel',
+                @note.persisted? ? note_path(@user.display_name, @note.slug) : notes_path(@user.display_name),
+                class: 'btn btn-ghost' %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control #{'is-invalid' if @note.errors.include?(:title)}" %>
+  <fieldset class="fieldset mb-3">
+    <%= f.label :title, class: 'fieldset-legend' %>
+    <%= f.text_field :title,
+                     class: "input input-bordered w-full #{@note.errors.include?(:title) ? 'input-error' : ''}" %>
     <% @note.errors.full_messages_for(:title).each do |message| %>
-      <div class="invalid-feedback">
-        <%= message %>
-      </div>
+      <p class="text-error text-sm field-error"><%= message %></p>
     <% end %>
-  </div>
-  <div class="form-group form-group__body">
-    <%= f.label :body %>
-    <small class="form-text text-muted">
+  </fieldset>
+
+  <fieldset class="fieldset form-group__body">
+    <%= f.label :body, class: 'fieldset-legend' %>
+    <p class="text-sm text-base-content/60 mb-1">
       Accepts
-      <a href="https://kramdown.gettalong.org/quickref.html" class="text-muted" target="_blank" rel="noopener noreferrer">kramdown-flavored</a>
+      <a href="https://kramdown.gettalong.org/quickref.html"
+         class="link link-hover"
+         target="_blank"
+         rel="noopener noreferrer">kramdown-flavored</a>
       markdown
-    </small>
+    </p>
     <% @note.errors.full_messages_for(:body).each do |message| %>
-      <div class="invalid-feedback">
-        <%= message %>
-      </div>
+      <p class="text-error text-sm field-error"><%= message %></p>
     <% end %>
-    <%= f.text_area :body, rows: 7, class: "form-control markdown-editor #{'is-invalid' if @note.errors.include?(:body)}" %>
-  </div>
+    <%= f.text_area :body, rows: 7,
+                    class: "textarea textarea-bordered w-full markdown-editor #{@note.errors.include?(:body) ? 'textarea-error' : ''}" %>
+  </fieldset>
+
 <% end %>
