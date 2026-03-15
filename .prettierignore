@@ -1,3 +1,2 @@
 app/assets/stylesheets/prism.css
-app/assets/tailwind/daisyui.mjs
-app/assets/tailwind/daisyui-theme.mjs
+app/assets/tailwind/vendor/
