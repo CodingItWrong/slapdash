@@ -1,6 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "./daisyui.mjs" {
-  themes: light --default, dim --prefersdark;
+  themes:
+    light --default,
+    dim --prefersdark;
 }
 
 /*
@@ -15,7 +17,7 @@
 }
 
 /* Syntax highlighting (Prism.js) */
-@import "../stylesheets/prism.css";
+@import '../stylesheets/prism.css';
 
 /* ─── Layout ─────────────────────────────────────────────── */
 
@@ -45,7 +47,7 @@ blockquote {
 /* ─── Markdown editor textarea ───────────────────────────── */
 
 .markdown-editor {
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   flex: 1;
 }
 
