@@ -14,7 +14,7 @@ gem "nokogiri"
 # frontend
 gem "propshaft"
 gem "importmap-rails"
-gem "cssbundling-rails", "~> 1.4"
+gem "tailwindcss-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 
