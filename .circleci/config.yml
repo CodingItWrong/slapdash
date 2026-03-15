@@ -24,9 +24,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+            - v4-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "pnpm-lock.yaml" }}
             # fallback to using the latest cache if no exact match is found
-            - v3-dependencies-
+            - v4-dependencies-
 
       - run:
           name: install dependencies
@@ -34,27 +34,28 @@ jobs:
             gem update bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
-            yarn install --frozen-lockfile
+            npm install -g pnpm
+            pnpm install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
             - vendor/bundle
-          key: v3-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+          key: v4-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "pnpm-lock.yaml" }}
 
       # Database setup
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
 
       # build CSS
-      - run: yarn build:css
+      - run: bin/rails tailwindcss:build
 
       # lint
       - run:
           name: run linting checks
           command: |
             bundle exec standardrb
-            yarn lint
+            pnpm run lint
 
       # run tests!
       - run:
