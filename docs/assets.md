@@ -25,8 +25,9 @@ app/assets/
 │   └── prism.css                # Syntax highlighting styles (imported by application.css)
 ├── tailwind/
 │   ├── application.css          # Tailwind CSS entry point
-│   ├── daisyui.mjs              # DaisyUI v5 plugin (vendor, committed)
-│   └── daisyui-theme.mjs        # DaisyUI theme plugin (vendor, committed)
+│   └── vendor/
+│       ├── daisyui.mjs          # DaisyUI v5 plugin (vendored, committed)
+│       └── daisyui-theme.mjs    # DaisyUI theme plugin (vendored, committed)
 └── builds/
     └── .keep                    # Directory placeholder (contents ignored)
 
@@ -287,8 +288,8 @@ When deploying to production (e.g., during `rails assets:precompile`):
 
 | File | Purpose | Role |
 |------|---------|------|
-| `app/assets/tailwind/daisyui.mjs` | DaisyUI v5 plugin | Generates UI component classes (btn, input, menu, etc.) |
-| `app/assets/tailwind/daisyui-theme.mjs` | DaisyUI theme plugin | Provides light and dim themes |
+| `app/assets/tailwind/vendor/daisyui.mjs` | DaisyUI v5 plugin | Generates UI component classes (btn, input, menu, etc.) |
+| `app/assets/tailwind/vendor/daisyui-theme.mjs` | DaisyUI theme plugin | Provides light and dim themes |
 
 ## Asset Workflow Summary
 
