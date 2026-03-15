@@ -12,7 +12,7 @@ export default class FilterController extends Controller {
     for (let listItem of this.listItemTargets) {
       const itemText = listItem.innerText.trim().toLowerCase();
       const shouldHide = filterText && !itemText.includes(filterText);
-      listItem.classList.toggle('d-none', shouldHide);
+      listItem.classList.toggle('hidden', shouldHide);
     }
   }
 }
