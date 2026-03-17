@@ -1,3 +1,6 @@
+> [!WARNING]  
+> Moved to <https://gitlab.com/codingitwrong/slapdash>
+
 # Slapdash
 
 An application for creating public Markdown-based notes.
