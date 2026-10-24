@@ -4,7 +4,7 @@ ruby "4.0.9"
 
 gem "rails", "~> 8.1.4"
 gem "pg", ">= 0.18", "< 2.0"
-gem "puma", "~> 7.2"
+gem "puma", "~> 8.0"
 gem "devise", "~> 5.0"
 gem "friendly_id"
 gem "pundit"
