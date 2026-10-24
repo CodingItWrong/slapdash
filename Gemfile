@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
-ruby "4.0.1"
+ruby "4.0.9"
 
-gem "rails", "~> 8.1.2"
+gem "rails", "~> 8.1.4"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 7.2"
 gem "devise", "~> 5.0"
